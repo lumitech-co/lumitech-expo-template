@@ -1,38 +1,18 @@
-import { useMutation } from '@tanstack/react-query';
-import {
-  ToastService,
-  ExceptionService
-} from 'services';
-import { useAuthStoreSelectors } from 'stores';
-import { LoginRequest } from '../models';
-import { AuthService } from '../AuthService';
+import { useMutation } from "@tanstack/react-query";
+import { LoginRequest, LoginResponse } from "../models";
+import { AuthService } from "../AuthService";
+import { QUERY_KEYS } from "../queryKeys";
+import { AxiosError } from "axios";
 
-export const useLogin = () => {
-  const { setTokens, setUser } =
-    useAuthStoreSelectors();
+export const signInMutationFnAuthService = async (params: LoginRequest) => {
+  const response = await AuthService.login(params);
 
-  const { isPending, mutateAsync: onLogin } = useMutation({
-    mutationFn: async (params: LoginRequest) => {
-      const response = await AuthService.login({
-        email: params.email,
-        password: params.password,
-      });
+  return response?.data;
+};
 
-      return response?.data;
-    },
-    onError: error => {
-      ToastService.onDanger({
-        title: ExceptionService.errorResolver(error),
-      });
-    },
-    onSuccess: data => {
-      setTokens({
-        accessToken: data.authentication.accessToken,
-        refreshToken: data.authentication.refreshToken,
-      });
-      setUser(data.user);
-    },
+export const useSignInMutationAuthService = () => {
+  return useMutation<LoginResponse, typeof AxiosError, LoginRequest>({
+    mutationFn: signInMutationFnAuthService,
+    mutationKey: QUERY_KEYS.LOGIN,
   });
-
-  return { isPending, onLogin };
 };
