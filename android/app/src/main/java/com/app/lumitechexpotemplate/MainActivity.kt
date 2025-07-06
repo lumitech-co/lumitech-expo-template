@@ -1,4 +1,4 @@
-package com.anonymous.lumitechexpotemplate
+package com.app.lumitechexpotemplate
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

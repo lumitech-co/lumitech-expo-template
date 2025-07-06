@@ -4,35 +4,28 @@
     "slug": "lumitech-expo-template",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./src/assets/images/logo.png",
     "scheme": "lumitechexpotemplate",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "extra": {
-      "API_URL": "https://api.example.com"
-    },
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.lumitechexpotemplate"
+      "supportsTablet": false,
+      "bundleIdentifier": "com.app.lumitechexpotemplate"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/logo.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.lumitechexpotemplate"
-    },
-    "web": {
-      "bundler": "metro",
-      "favicon": "./assets/images/favicon.png"
+      "package": "com.app.lumitechexpotemplate"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./src/assets/images/logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -42,7 +35,10 @@
         "expo-font",
         {
           "fonts": [
-            "./assets/fonts/icomoon.ttf"
+            "./src/assets/fonts/icomoon.ttf",
+            "./src/assets/fonts/DMSans-Bold.ttf",
+            "./src/assets/fonts/DMSans-Medium.ttf",
+            "./src/assets/fonts/DMSans-Regular.ttf"
           ]
         }
       ]

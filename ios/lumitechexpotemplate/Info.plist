@@ -28,7 +28,7 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>lumitechexpotemplate</string>
-          <string>com.anonymous.lumitechexpotemplate</string>
+          <string>com.app.lumitechexpotemplate</string>
         </array>
       </dict>
     </array>
@@ -45,9 +45,16 @@
       <key>NSAllowsLocalNetworking</key>
       <true/>
     </dict>
+    <key>NSUserActivityTypes</key>
+    <array>
+      <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
+    </array>
     <key>UIAppFonts</key>
     <array>
       <string>icomoon.ttf</string>
+      <string>DMSans-Bold.ttf</string>
+      <string>DMSans-Medium.ttf</string>
+      <string>DMSans-Regular.ttf</string>
     </array>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
