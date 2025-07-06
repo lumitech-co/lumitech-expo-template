@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import Constants from 'expo-constants';
 import { z } from 'zod';
 import { isDev } from './General';
 
@@ -7,7 +6,9 @@ export const envSchema = z.object({
   API_URL: z.string(),
 });
 
-const Config = Constants.expoConfig?.extra || {};
+const Config = {
+  API_URL: process.env.EXPO_PUBLIC_API_URL || '',
+};
 
 export const parseEnv = () => {
   if (!isDev) {

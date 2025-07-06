@@ -150,11 +150,33 @@ src/
 - `npm run android:apk` - Build Android APK
 - `npm run android:bundle` - Build Android bundle
 
-Access in your app:
-```typescript
-import Constants from 'expo-constants';
+## 🔐 Environment Configuration
 
-const apiUrl = Constants.expoConfig?.extra?.API_URL;
+Environment variables are handled using Expo's built-in environment variable system. Create a `.env` file in your project root:
+
+```env
+EXPO_PUBLIC_API_URL=https://api.example.com
+```
+
+The template includes a robust environment configuration system:
+
+```typescript
+// src/shared/lib/Environments.ts
+const Config = {
+  API_URL: process.env.EXPO_PUBLIC_API_URL || '',
+};
+
+// With Zod validation in development
+export const envSchema = z.object({
+  API_URL: z.string(),
+});
+```
+
+Access environment variables anywhere in your app:
+```typescript
+import { Config } from 'lib';
+
+const apiUrl = Config.API_URL;
 ```
 
 ## 📱 Customization
