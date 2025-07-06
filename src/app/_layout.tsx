@@ -9,11 +9,11 @@ import { Toaster } from "sonner-native";
 import { ReducedMotionConfig, ReduceMotion } from "react-native-reanimated";
 import { ModalProvider } from "react-native-modalfy";
 import { Stack } from "expo-router";
-import { queryClient } from "api";
 import { DefaultTheme } from "themes";
 import { breakpoints } from "themes";
 import { modalStack } from "modals";
-import { useSelectAuthentication } from "../shared/stores";
+import { queryClient } from "../services";
+import { useSelectAuthentication } from "../model";
 
 UnistylesRegistry.addBreakpoints(breakpoints).addThemes({
   defaultTheme: DefaultTheme,
