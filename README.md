@@ -1,6 +1,26 @@
 # Lumitech Expo Template
 
-A modern React Native template built with Expo, designed for scalable mobile applications with best practices and powerful libraries.
+A modern React Native template built with Expo, implementing **MVVM (Model-View-ViewModel)** architecture for scalable mobile applications with best practices and powerful libraries.
+
+## 🏗️ Architecture
+
+This template implements a **MVVM (Model-View-ViewModel)** architecture pattern with Clean Architecture principles:
+
+### MVVM Components
+
+- **Model** (`src/model/`) - Data layer with business logic, API services, and state management
+- **View** (`src/app/`) - UI layer with screens and components  
+- **ViewModel** (`src/view-models/`) - Business logic layer that connects Views to Models
+- **Services** (`src/services/`) - Shared services and utilities
+- **Widgets** (`src/shared/widgets/`) - Reusable UI components for specific features
+
+### MVVM Benefits
+
+- **Separation of Concerns** - Clear boundaries between UI, business logic, and data
+- **Testability** - Isolated business logic in ViewModels
+- **Reusability** - ViewModels can be shared across multiple Views
+- **Maintainability** - Changes in one layer don't affect others
+- **Type Safety** - Full TypeScript support with proper interfaces
 
 ## 🚀 Core Technologies
 
@@ -9,87 +29,155 @@ A modern React Native template built with Expo, designed for scalable mobile app
 - **Expo Router** - File-based routing system
 - **TypeScript** - Type safety and better development experience
 - **React Native Unistyles** - Theming and styling system
-- **React Query** - Data fetching and caching
-- **Zustand** - Lightweight state management
+- **TanStack Query** - Server state management and caching
+- **Zustand** - Lightweight state management with MMKV persistence
 - **React Native Reanimated** - Smooth animations
-- **MMKV** - High-performance key-value storage
-- **React Hook Form** - Form management
-- **Zod** - Schema validation
-- **i18next** - Internationalization
+- **React Hook Form** - Form management with Zod validation
+- **i18next** - Internationalization support
+- **React Native Modalfy** - Global modal management
 
 ## 📁 Project Structure
 
 ```
 src/
-├── app/                    # App router screens
+├── app/                    # Views Layer (MVVM)
 │   ├── (auth)/            # Authentication screens
-│   │   ├── _layout.tsx
-│   │   └── index.tsx
 │   ├── (tabs)/            # Tab navigation screens
-│   │   ├── _layout.tsx
-│   │   ├── alerts.tsx
-│   │   └── profile.tsx
 │   ├── _layout.tsx        # Root layout
 │   └── +not-found.tsx     # 404 screen
-├── modules/               # Feature modules
-│   ├── Auth/
-│   └── Common/
-├── shared/                # Shared utilities and components
-│   ├── api/               # API layer
-│   │   ├── auth/          # Authentication API
-│   │   │   ├── AuthService.ts
-│   │   │   ├── models.ts
-│   │   │   └── mutations/
-│   │   ├── baseQuery.ts   # Axios configuration
-│   │   ├── models/        # API models and query keys
-│   │   └── queryClient.ts
+├── model/                 # Model Layer (MVVM)
+│   ├── auth/              # Authentication domain
+│   │   ├── api/           # API services
+│   │   ├── store/         # State management
+│   │   └── auth.types.ts  # Domain types
+│   └── user/              # User domain
+│       ├── api/
+│       ├── store/
+│       └── user.types.ts
+├── view-models/           # ViewModel Layer (MVVM)
+│   ├── auth/              # Authentication view-models
+│   │   ├── login/         # Login business logic
+│   │   └── register/      # Registration business logic
+│   └── user/              # User view-models
+├── services/              # Service Layer
+│   ├── ApiService/        # API service layer
+│   ├── ModalService/      # Modal management
+│   ├── ToastService/      # Toast notifications
+│   └── RouteService/      # Navigation utilities
+├── shared/                # Shared Layer
+│   ├── api/               # Shared API utilities
 │   ├── hooks/             # Custom React hooks
 │   ├── lib/               # Utility libraries
-│   ├── modals/            # Modal configuration
-│   ├── services/          # Business logic services
-│   ├── stores/            # State management
-│   │   ├── auth/          # Authentication store
-│   │   │   ├── store.ts
-│   │   │   ├── selectors.ts
-│   │   │   └── types.ts
-│   │   ├── lib.ts         # Store utilities
-│   │   └── models.ts
-│   ├── themes/            # Design system and themes
+│   ├── providers/         # React providers
+│   ├── services/          # Shared services
+│   ├── stores/            # Shared state management
+│   ├── themes/            # Design system
 │   ├── translations/      # i18n translations
-│   ├── types/             # TypeScript type definitions
-│   └── ui/                # Reusable UI components
+│   ├── types/             # Global TypeScript types
+│   ├── ui/                # Base UI components
+│   └── widgets/           # Feature-specific components
+│       └── modals/        # Global modals
 └── assets/                # Static assets
-    ├── fonts/
-    ├── images/
-    └── bootsplash/
 ```
 
-## 🔧 Key Features
+## 🔧 MVVM Implementation
 
-### Navigation
-- **Expo Router** - File-based routing with TypeScript support
-- **Tab Navigation** - Bottom tab navigation for main screens
-- **Authentication Flow** - Conditional rendering based on auth state
-- **Deep Linking** - URL scheme support
+### Model Layer
 
-### State Management
-- **Zustand** - Lightweight state management with Immer integration
-- **React Query** - Server state management and caching
-- **MMKV** - Persistent storage with custom store utilities
-- **Store Selectors** - Auto-generated selectors for optimized re-renders
+The Model layer contains domain-specific business logic, data access, and state management:
 
-### UI & Animations
-- **React Native Unistyles** - Theming and responsive styles
-- **React Native Reanimated** - Smooth 60fps animations
-- **Gesture Handler** - Touch gesture support
-- **Safe Area** - Proper safe area handling
+```typescript
+// src/model/auth/store/auth.store.ts
+export const useAuthStore = createStore<AuthStore>(
+  immer(set => ({
+    authentication: { accessToken: '', refreshToken: '' },
+    setTokens: (tokens: Authentication) => {
+      set(state => { state.authentication = tokens; });
+    },
+  })),
+  'AUTH_STORAGE',
+  persistStorage,
+);
 
-### Development Experience
-- **TypeScript** - Full type safety
-- **ESLint** - Code quality enforcement
-- **Prettier** - Code formatting
-- **Path Aliases** - Clean import statements
-- **Hot Reload** - Fast development workflow
+// src/model/auth/api/auth.mutations.ts
+export const useSignInMutationAuthService = () => {
+  return useMutation<LoginResponse, AxiosError, LoginRequest>({
+    mutationFn: AuthService.login,
+  });
+};
+```
+
+### ViewModel Layer
+
+ViewModels contain presentation logic and connect Views to Models:
+
+```typescript
+// src/view-models/auth/login/useLoginModel.ts
+export const useLoginModel = () => {
+  const { setTokens } = useAuthStore();
+  const loginMutation = useSignInMutationAuthService();
+
+  const form = useForm<LoginForm>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: '', password: '' },
+  });
+
+  const onSubmit = async (data: LoginForm) => {
+    const response = await loginMutation.mutateAsync(data);
+    setTokens(response.authentication);
+    return response;
+  };
+
+  return {
+    form,
+    onSubmit: form.handleSubmit(onSubmit),
+    isLoading: loginMutation.isPending,
+    error: loginMutation.error,
+  };
+};
+```
+
+### View Layer
+
+Views are pure UI components that consume ViewModels:
+
+```typescript
+// src/app/(auth)/login.tsx
+import { useLoginModel } from 'view-models/auth';
+
+export default function LoginScreen() {
+  const { form, onSubmit, isLoading, error } = useLoginModel();
+  
+  return (
+    <View>
+      <Controller
+        control={form.control}
+        name="email"
+        render={({ field }) => (
+          <TextInput {...field} placeholder="Email" />
+        )}
+      />
+      <Button onPress={onSubmit} loading={isLoading}>
+        Login
+      </Button>
+    </View>
+  );
+}
+```
+
+## 🎯 Path Aliases
+
+The template includes comprehensive path aliases for clean imports:
+
+```typescript
+// Available aliases:
+import { useAuthStore } from 'models/auth';           // src/model/*
+import { useLoginModel } from 'view-models/auth';     // src/view-models/*
+import { LoginModal } from 'widgets/modals';          // src/shared/widgets/*
+import { baseQuery } from 'api';                      // src/shared/api/*
+import { Button } from 'ui';                          // src/shared/ui/*
+import { ToastService } from 'services';              // src/shared/services/*
+```
 
 ## 🚀 Getting Started
 
@@ -158,20 +246,6 @@ Environment variables are handled using Expo's built-in environment variable sys
 EXPO_PUBLIC_API_URL=https://api.example.com
 ```
 
-The template includes a robust environment configuration system:
-
-```typescript
-// src/shared/lib/Environments.ts
-const Config = {
-  API_URL: process.env.EXPO_PUBLIC_API_URL || '',
-};
-
-// With Zod validation in development
-export const envSchema = z.object({
-  API_URL: z.string(),
-});
-```
-
 Access environment variables anywhere in your app:
 ```typescript
 import { Config } from 'lib';
@@ -179,101 +253,19 @@ import { Config } from 'lib';
 const apiUrl = Config.API_URL;
 ```
 
-## 📱 Customization
-
-### Updating App Icon and Splash Screen
-
-1. Replace `assets/images/icon.png` with your app icon
-2. Replace `assets/images/splash-icon.png` with your splash screen icon
-3. Update `app.json` configuration as needed
-
-### Modifying Theme
-
-Edit theme configuration in `src/shared/themes/`:
-
-```typescript
-// src/shared/themes/Colors.ts
-export const Colors = {
-  primary: '#007AFF',
-  secondary: '#5AC8FA',
-  // ... your colors
-};
-```
-
-### Adding New Screens
-
-1. Create new file in `src/app/` directory
-2. The file name becomes the route automatically
-3. Use TypeScript for type safety
-
-## 🔄 State Management & API Layer
+## 🏗️ State Management Architecture
 
 ### Store Architecture
 
-The template uses a sophisticated store pattern with MMKV persistence and automatic selectors:
+The template uses Zustand with MMKV persistence and automatic selectors:
 
 ```typescript
-// src/shared/stores/auth/store.ts
-import { immer } from 'zustand/middleware/immer';
-import { createStore } from '../lib';
-
-export const useAuthStore = createStore<UserStore>(
-  immer(set => ({
-    authentication: { accessToken: '', refreshToken: '' },
-    user: { email: null, id: 0 },
-    setUser: (user: User) => set(state => { state.user = user; }),
-    setTokens: (tokens: Authentication) => set(state => { 
-      state.authentication = tokens; 
-    }),
-  })),
-  'AUTH_STORAGE',
-  persistStorage,
-);
-```
-
-### Auto-Generated Selectors
-
-```typescript
-// src/shared/stores/auth/selectors.ts
+// Auto-generated selectors for optimized re-renders
 export const useAuthStoreSelectors = createSelectors(useAuthStore);
 
+// Optimized selector usage
 export const useSelectUserId = () =>
   useAuthStoreSelectors(state => state.user.id);
-```
-
-### API Layer with Services
-
-```typescript
-// src/shared/api/auth/AuthService.ts
-import { baseQuery } from '../baseQuery';
-
-const login = (params: LoginRequest) => {
-  return baseQuery.post<LoginResponse>('/auth/login', params);
-};
-
-export const AuthService = { login };
-```
-
-### React Query Mutations
-
-```typescript
-// src/shared/api/auth/mutations/useLogin.ts
-export const useLogin = () => {
-  const { setTokens, setUser } = useAuthStoreSelectors();
-
-  const { isPending, mutateAsync: onLogin } = useMutation({
-    mutationFn: async (params: LoginRequest) => {
-      const response = await AuthService.login(params);
-      return response?.data;
-    },
-    onSuccess: data => {
-      setTokens(data.authentication);
-      setUser(data.user);
-    },
-  });
-
-  return { isPending, onLogin };
-};
 ```
 
 ### Key Features
@@ -284,18 +276,90 @@ export const useLogin = () => {
 - **Global Store Reset** - Reset all stores on logout/401 errors
 - **Axios Interceptors** - Automatic token injection and 401 handling
 
+## 🎨 UI & Theming
+
+### Design System
+
+```typescript
+// src/shared/themes/Colors.ts
+export const Colors = {
+  primary: '#007AFF',
+  secondary: '#5AC8FA',
+  // ... your colors
+};
+
+// src/shared/themes/Fonts.ts
+export const Fonts = {
+  regular: 'Inter-Regular',
+  medium: 'Inter-Medium',
+  // ... your fonts
+};
+```
+
+### Component Architecture
+
+- **Base Components** (`src/shared/ui/`) - Primitive UI components
+- **Widgets** (`src/shared/widgets/`) - Feature-specific composite components
+- **Modals** (`src/shared/widgets/modals/`) - Global modal system
+
+## 📱 Customization
+
+### Adding New Features
+
+1. **Create Model** - Add domain logic in `src/model/[domain]/`
+2. **Create ViewModel** - Add presentation logic in `src/view-models/[domain]/`
+3. **Create View** - Add UI in `src/app/[route].tsx`
+4. **Update Types** - Add TypeScript interfaces
+
+### Updating App Icon and Splash Screen
+
+1. Replace `assets/images/icon.png` with your app icon
+2. Replace `assets/images/splash-icon.png` with your splash screen icon
+3. Update `app.json` configuration as needed
+
+## 🔄 API Integration
+
+### Service Layer
+
+```typescript
+// src/model/auth/api/auth.api.ts
+export const AuthService = {
+  login: async (params: LoginRequest) => {
+    const response = await baseQuery.post<LoginResponse>('/auth/login', params);
+    return response?.data;
+  },
+  register: async (params: RegisterRequest) => {
+    const response = await baseQuery.post<RegisterResponse>('/auth/register', params);
+    return response?.data;
+  },
+};
+```
+
+### Mutation Integration
+
+```typescript
+// src/model/auth/api/auth.mutations.ts
+export const useSignInMutationAuthService = () => {
+  return useMutation<LoginResponse, AxiosError, LoginRequest>({
+    mutationFn: AuthService.login,
+  });
+};
+```
+
 ## 📖 Additional Documentation
 
 - [Expo Documentation](https://docs.expo.dev/)
 - [React Native Documentation](https://reactnative.dev/docs/getting-started)
 - [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
 - [React Native Unistyles](https://reactnativeunistyles.vercel.app/)
+- [TanStack Query](https://tanstack.com/query/latest)
+- [Zustand Documentation](https://docs.pmnd.rs/zustand/getting-started/introduction)
 
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
-3. Make your changes
+3. Make your changes following MVVM principles
 4. Add tests if applicable
 5. Submit a pull request
 
