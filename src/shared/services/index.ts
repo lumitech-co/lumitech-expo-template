@@ -1,4 +1,4 @@
 export * from './ExceptionService';
-export * from './ModalService';
-export * from './RouteService';
+export * from './ExceptionService';
 export * from './ToastService';
+export * from './RouteService';

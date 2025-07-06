@@ -1,6 +1,6 @@
 import { toast } from 'sonner-native';
-import { Colors } from '../../themes';
 import { ViewStyle } from 'react-native';
+import { Colors } from 'themes';
 
 interface ToastParams {
   position?: 'top-center' | 'bottom-center';

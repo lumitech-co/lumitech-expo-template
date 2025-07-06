@@ -1,6 +1,6 @@
 import { MMKV } from 'react-native-mmkv';
 import { immer } from 'zustand/middleware/immer';
-import { Authentication, AuthState, AuthStore } from './auth.types';
+import { Authentication, AuthState, AuthStore } from '../auth.types';
 import { createStore } from '@/src/shared/lib/Zustand';
 
 const persistStorage = new MMKV({
