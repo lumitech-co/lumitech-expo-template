@@ -1,5 +1,5 @@
-import { useAuthStore } from '@/src/model';
-import { resetAllStores } from '@/src/shared/lib/Zustand';
+import { useAuthStore } from 'models';
+import { resetAllStores } from 'lib/Zustand';
 import axios, { AxiosError } from 'axios';
 import { ExceptionService } from 'services';
 

@@ -1,4 +1,4 @@
-import { createSelectors } from "@/src/shared/lib/Zustand";
+import { createSelectors } from "lib/Zustand";
 import { useUserStore } from "./user.store";
 
 export const useUserStoreSelectors = createSelectors(useUserStore);

@@ -32,7 +32,13 @@
       "ui": ["src/shared/ui/index"],
       "ui/*": ["src/shared/ui/*"],
       "shared": ["src/shared/index"],
-      "shared/*": ["src/shared/*"]
+      "shared/*": ["src/shared/*"],
+      "models": ["src/model/index"],
+      "models/*": ["src/model/*"],
+      "view-models": ["src/view-models/index"],
+      "view-models/*": ["src/view-models/*"],
+      "widgets": ["src/shared/widgets/index"],
+      "widgets/*": ["src/shared/widgets/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"]

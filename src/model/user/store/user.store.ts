@@ -1,7 +1,7 @@
 import { MMKV } from "react-native-mmkv";
 import { immer } from "zustand/middleware/immer";
 import { UserState, UserStore } from "../user.types";
-import { createStore } from "@/src/shared/lib/Zustand";
+import { createStore } from "lib/Zustand";
 
 const persistStorage = new MMKV({
   id: "USER",

@@ -1,8 +1,21 @@
-import { baseQuery } from "@/src/shared/api";
-import { LoginRequest, LoginResponse } from "../auth.types";
+import { baseQuery } from "api";
+import {
+  LoginRequest,
+  LoginResponse,
+  RegisterRequest,
+  RegisterResponse,
+} from "../auth.types";
 
 const login = async (params: LoginRequest) => {
   const response = await baseQuery.post<LoginResponse>("/auth/login", {
+    ...params,
+  });
+
+  return response?.data;
+};
+
+const register = async (params: RegisterRequest) => {
+  const response = await baseQuery.post<RegisterResponse>("/auth/register", {
     ...params,
   });
 
@@ -16,5 +29,6 @@ const ping = async () => {
 
 export const AuthService = {
   login,
+  register,
   ping,
 };

@@ -11,9 +11,9 @@ import { ModalProvider } from "react-native-modalfy";
 import { Stack } from "expo-router";
 import { DefaultTheme } from "themes";
 import { breakpoints } from "themes";
-import { modalStack } from "@/src/shared/widgets/modals";
-import { queryClient } from "../services";
-import { useSelectAuthentication } from "../model";
+import { modalStack } from "widgets/modals";
+import { queryClient } from "api";
+import { useSelectAuthentication } from "models";
 
 UnistylesRegistry.addBreakpoints(breakpoints).addThemes({
   defaultTheme: DefaultTheme,

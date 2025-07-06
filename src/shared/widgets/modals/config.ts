@@ -1,6 +1,6 @@
 import { ModalOptions, createModalStack } from 'react-native-modalfy';
 import { UpdateModal } from './UpdateModal';
-import { ModalNames } from '@/src/services/ModalService';
+import { ModalNames } from 'services/ModalService';
 
 const UpdateModalConfig: ModalOptions = {
   modal: UpdateModal,

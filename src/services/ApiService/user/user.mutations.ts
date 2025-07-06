@@ -4,7 +4,7 @@ import {
   UpdateUserRequest,
   UpdateUserResponse,
   DeleteUserResponse,
-} from "@/src/model";
+} from "models";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { UserService } from "./user.api";

@@ -1,4 +1,4 @@
-import { createSelectors } from '@/src/shared/lib/Zustand';
+import { createSelectors } from 'lib/Zustand';
 import { useAuthStore } from './auth.store';
 
 export const useAuthStoreSelectors = createSelectors(useAuthStore);

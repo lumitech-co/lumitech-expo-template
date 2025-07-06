@@ -1,6 +1,11 @@
-import { UpdateUserRequest, useSelectUserId, useUserStoreSelectors } from "@/src/model";
-import { useMutationEvents, useUpdateUserMutation } from "@/src/services";
-import {  } from "@/src/services";
+import {
+  UpdateUserRequest,
+  UpdateUserResponse,
+  useSelectUserId,
+  useUserStoreSelectors,
+  useUpdateUserMutation,
+} from "models";
+import { useMutationEvents } from "api";
 
 export const useUpdateUser = () => {
   const updateUserMutation = useUpdateUserMutation();
@@ -14,7 +19,7 @@ export const useUpdateUser = () => {
   };
 
   useMutationEvents(updateUserMutation, {
-    onSuccess: (data) => {
+    onSuccess: (data: UpdateUserResponse) => {
       setUser(data.user);
     },
   });

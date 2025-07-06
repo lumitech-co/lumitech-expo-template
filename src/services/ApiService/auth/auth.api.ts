@@ -1,4 +1,4 @@
-import { LoginRequest, LoginResponse } from '@/src/model';
+import { LoginRequest, LoginResponse } from 'models';
 import { baseQuery } from '../baseQuery';
 
 const login = async (params: LoginRequest) => {

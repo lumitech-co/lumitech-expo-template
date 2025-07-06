@@ -7,7 +7,7 @@ import {
   GetUsersRequest,
   GetUsersResponse,
   GetUserResponse 
-} from '@/src/model';
+} from 'models';
 import { baseQuery } from '../baseQuery';
 
 const createUser = async (params: CreateUserRequest) => {

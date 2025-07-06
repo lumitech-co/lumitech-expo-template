@@ -2,7 +2,7 @@ import {
   GetUserResponse,
   GetUsersResponse,
   GetUsersRequest 
-} from "@/src/model";
+} from "models";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { QUERY_KEYS } from "./queryKeys";

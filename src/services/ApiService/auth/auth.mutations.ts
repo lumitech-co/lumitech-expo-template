@@ -1,4 +1,4 @@
-import { LoginRequest, LoginResponse } from "@/src/model";
+import { LoginRequest, LoginResponse } from "models";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { AuthService } from "./auth.api";

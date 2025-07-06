@@ -1,4 +1,4 @@
-import { baseQuery } from "@/src/shared/api";
+import { baseQuery } from "api";
 import {
   CreateUserRequest,
   CreateUserResponse,
