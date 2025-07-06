@@ -1,0 +1,110 @@
+export const Colors = {
+  bg_screen: '#F7F7F7',
+  white: '#FFFFFF',
+  white_50: '##FEFEFE',
+
+  cold_gray_100: '#E5E6E8',
+  cold_gray_100_opacity_40: '#E5E6E866',
+
+  red_accent: '#E84451',
+  main_accent: '#EC696F',
+  gray_border: '#B3B4B4',
+
+  black_950: '#151515',
+  black: '#000000',
+
+  blue_400: '#2B67F6',
+  blue_600: '#1C64F2',
+  blue_950: '#0277B5',
+  dark_blue_50: '#E8F2FF',
+  dark_blue_600: '#1225FF',
+  dark_blue_700: '#091AF9',
+  dark_blue_100: '#E8F2FF',
+
+  neutral_gray: '#CDCDCE',
+  gray_200: '#E5E7EB',
+  gray_600: '#5E5E5E',
+  gray_500: '#3C3C434D',
+  gray_500_2: '#6B7280',
+  gray_400: '#737373',
+  gray_650: '#3D3D3D',
+  gray_700: '#4D4D4D',
+  gray_800: '#1F2A37',
+  gray_50: '#F6F6F6',
+  gray_100: '#F0F0F1',
+  gray_300: '#7878801F',
+  gray_950: '#3D3D3D',
+  gray_900: '#111928',
+
+  text_secondary: '#888888',
+
+  fill_secondary: 'rgba(120, 120, 128, 0.16)',
+  drop_shadow: 'rgba(0, 0, 0, 0.12)',
+
+  cold_gray_50: '#FAFAFB',
+  cold_gray_300: '#AAACB6',
+  cold_gray_400: '#7F8191',
+  cold_gray_200: '#CDCED4',
+  cold_gray_500: 'rgba(100, 102, 118, 1)',
+  cold_gray_500_2: '#646676',
+  cold_gray_600: '#565764',
+  cold_gray_700: '#4A4B54',
+  cold_gray_800: '#414149',
+  cold_gray_900: '#1E1F26',
+  cold_gray_900_2: '#393940',
+  cold_gray_950: '#070708',
+  fills_tertiary: 'rgba(120,120,128,0.2)',
+  danger_950: '#FF3838',
+  nav_bar_accent: '#FF455C',
+  border_pink: '#EC6A7A',
+  light_pink: '#FCCCCD',
+  bald_pink: '#E84E1B',
+  background_light_pink: '#FBF1F1',
+  background_gray: '#CECECE',
+
+  dark_gray: '#575756',
+  frozen_button_gray: '#5D5D5D',
+
+  action_sheet_separator: 'rgba(128, 128, 128, 0.55)',
+
+  roman_50: '#FEF2F2',
+  roman_200: '#FCCCCD',
+
+  main_background: '#D9D9D9',
+  gray_background: '#CCCCCC',
+  main_background_opacity_50: 'rgba(217, 217, 217, 0.5)',
+  main_background_opacity_70: 'rgba(217, 217, 217, 0.7)',
+  bg_secondary: '#C0C0C1',
+  bg_tertiary: '#CFCFCF',
+  bg_secondary_40_op: 'rgba(192, 192, 193, 0.4)',
+  card_background: '#C9C9C9',
+  card_background_40_op: 'rgba(217, 217, 217, 0.4)',
+  text_grey: '#95959B',
+  text_white: '#F5F5F5',
+  shamrok_900: '#059665',
+  shamrok_600: '#059665',
+  shamrok_700: '#047854',
+  /** SUCCESS */
+
+  success_100: '#F0FFF5',
+  success_200: '#CCFCE3',
+  success_300: '#8CFAC7',
+  success_400: '#2CE69B',
+  success_500: '#00D68F',
+  success_600: '#00B887',
+  success_700: '#00997A',
+  success_800: '#007D6C',
+  success_900: '#004A45',
+
+  transparent: 'rgba(0, 0, 0, 0)',
+
+  brown: '#553522',
+  border: '#E7E7E7',
+  onboarding_arrow: '#130F26',
+
+  white_opacity_40: 'rgba(217, 217, 217, 0.4)',
+
+  attendee_avatar_bg: '#B7B7B7',
+
+  pink: '#E4A2A5',
+};
