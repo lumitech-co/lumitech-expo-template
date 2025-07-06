@@ -8,12 +8,12 @@ export interface User {
   id: number;
 }
 
-export interface State {
+export interface LoginResponse {
   authentication: Authentication;
   user: User;
 }
 
-export interface UserStore extends State {
-  setUser: (user: User) => void;
-  setTokens: (tokens: Authentication) => void;
+export interface LoginRequest {
+  email: string;
+  password: string;
 }

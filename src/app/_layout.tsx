@@ -10,17 +10,17 @@ import { ReducedMotionConfig, ReduceMotion } from "react-native-reanimated";
 import { ModalProvider } from "react-native-modalfy";
 import { Stack } from "expo-router";
 import { queryClient } from "api";
-import { useToken } from "stores";
 import { DefaultTheme } from "themes";
 import { breakpoints } from "themes";
 import { modalStack } from "modals";
+import { useSelectAuthentication } from "../shared/stores";
 
 UnistylesRegistry.addBreakpoints(breakpoints).addThemes({
   defaultTheme: DefaultTheme,
 });
 
 export default function RootLayout() {
-  const token = useToken();
+  const { accessToken } = useSelectAuthentication();
 
   return (
     <UnistylesProvider>
@@ -30,7 +30,7 @@ export default function RootLayout() {
           <SafeAreaProvider>
             <QueryClientProvider client={queryClient}>
               <ModalProvider stack={modalStack}>
-                {token ? (
+                {accessToken ? (
                   <Stack screenOptions={{ headerShown: false }}>
                     <Stack.Screen
                       name="(tabs)"
