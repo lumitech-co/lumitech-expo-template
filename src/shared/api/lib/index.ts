@@ -1,2 +1,2 @@
-export * from './useMutationEvents';
-export * from './useQueryEvents';
+export * from "./useMutationEvents";
+export * from "./useQueryEvents";

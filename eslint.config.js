@@ -47,44 +47,40 @@ module.exports = [
       },
       'boundaries/elements': [
         {
+          type: 'app',
+          pattern: './src/app/**',
+        },
+        {
+          type: 'models',
+          pattern: './src/model/**',
+        },
+        {
+          type: 'view-models',
+          pattern: './src/view-models/**',
+        },
+        {
+          type: 'services',
+          pattern: './src/services/**',
+        },
+        {
           type: 'shared',
           pattern: './src/shared/**',
         },
         {
-          type: 'common',
-          pattern: './src/modules/Common/**',
-        },
-        {
-          type: 'modules',
-          pattern: './src/modules/**',
-        },
-        {
-          type: 'features',
-          pattern: './src/modules/*/features/**',
-        },
-        {
-          type: 'adapters',
-          pattern: './src/modules/*/adapters/**',
-        },
-        {
-          type: 'models',
-          pattern: './src/modules/*/models.ts',
+          type: 'widgets',
+          pattern: './src/shared/widgets/**',
         },
         {
           type: 'ui',
-          pattern: './src/modules/*/ui/**',
+          pattern: './src/shared/ui/**',
         },
         {
-          type: 'widgets',
-          pattern: './src/modules/*/widgets/**',
+          type: 'api',
+          pattern: './src/shared/api/**',
         },
         {
-          type: 'screens',
-          pattern: './src/screens/**',
-        },
-        {
-          type: 'navigation',
-          pattern: './src/navigation/**',
+          type: 'stores',
+          pattern: './src/shared/stores/**',
         },
       ],
     },
@@ -145,177 +141,163 @@ module.exports = [
           tsx: 'never',
         },
       ],
+      // MVVM Architecture Rules
+      'boundaries/element-types': [
+        2,
+        {
+          default: 'disallow',
+          rules: [
+            // App (Views) Layer Rules
+            {
+              from: ['app'],
+              allow: ['view-models', 'widgets', 'ui', 'shared'],
+              message: 'Views can only import from view-models, widgets, ui, and shared layers',
+            },
+            
+            // View-Models Layer Rules
+            {
+              from: ['view-models'],
+              allow: ['models', 'shared'],
+              disallow: ['app', 'view-models'],
+              message: 'View-models can only import from models and shared layers, not from views or other view-models',
+            },
+            
+            // Models Layer Rules
+            {
+              from: ['models'],
+              allow: ['shared', 'api'],
+              disallow: ['app', 'view-models', 'widgets', 'ui'],
+              message: 'Models can only import from shared and api layers, not from presentation layers',
+            },
+            
+            // Services Layer Rules
+            {
+              from: ['services'],
+              allow: ['shared', 'models'],
+              disallow: ['app', 'view-models', 'widgets', 'ui'],
+              message: 'Services can only import from shared and models layers',
+            },
+            
+            // Widgets Layer Rules
+            {
+              from: ['widgets'],
+              allow: ['ui', 'shared'],
+              disallow: ['app', 'view-models', 'models', 'services'],
+              message: 'Widgets can only import from ui and shared layers, not from business logic layers',
+            },
+            
+            // UI Layer Rules
+            {
+              from: ['ui'],
+              allow: ['shared'],
+              disallow: ['app', 'view-models', 'models', 'services', 'widgets'],
+              message: 'UI components can only import from shared layer',
+            },
+            
+            // API Layer Rules
+            {
+              from: ['api'],
+              allow: ['shared'],
+              disallow: ['app', 'view-models', 'models', 'services', 'widgets', 'ui'],
+              message: 'API layer can only import from shared utilities',
+            },
+            
+            // Shared Layer Rules
+            {
+              from: ['shared'],
+              allow: ['shared'],
+              message: 'Shared modules can only import from other shared modules',
+            },
+            
+            // Stores Layer Rules
+            {
+              from: ['stores'],
+              allow: ['shared'],
+              disallow: ['app', 'view-models', 'models', 'services', 'widgets', 'ui', 'api'],
+              message: 'Stores can only import from shared utilities',
+            },
+          ],
+        },
+      ],
+      // MVVM Import Restrictions
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['../app/*', '../../app/*', '**/app/*'],
+              message: 'Direct imports from app layer are not allowed outside of app layer',
+            },
+            {
+              group: ['../model/*', '../../model/*', '**/model/*'],
+              message: 'Use "models/*" alias instead of relative imports to model layer',
+            },
+            {
+              group: ['../view-models/*', '../../view-models/*', '**/view-models/*'],
+              message: 'Use "view-models/*" alias instead of relative imports to view-models layer',
+            },
+            {
+              group: ['../shared/widgets/*', '../../shared/widgets/*', '**/shared/widgets/*'],
+              message: 'Use "widgets/*" alias instead of relative imports to widgets',
+            },
+            {
+              group: ['../shared/ui/*', '../../shared/ui/*', '**/shared/ui/*'],
+              message: 'Use "ui/*" alias instead of relative imports to ui components',
+            },
+            {
+              group: ['../shared/api/*', '../../shared/api/*', '**/shared/api/*'],
+              message: 'Use "api/*" alias instead of relative imports to api layer',
+            },
+            {
+              group: ['../shared/services/*', '../../shared/services/*', '**/shared/services/*'],
+              message: 'Use "services/*" alias instead of relative imports to services',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  // Allow view-models to import from each other in specific cases
+  {
+    files: ['**/view-models/**/index.ts'],
+    rules: {
       'boundaries/element-types': [
         2,
         {
           default: 'disallow',
           rules: [
             {
-              from: ['modules'],
-              allow: ['shared', 'common'],
-              message: 'Modules can import from shared and common',
+              from: ['view-models'],
+              allow: ['view-models', 'models', 'shared'],
+              message: 'View-model index files can re-export other view-models',
             },
-            {
-              from: ['common'],
-              allow: ['shared'],
-              message: 'Common can import from shared',
-            },
-            {
-              from: ['navigation'],
-              allow: ['modules'],
-              message: 'Navigation can import from modules',
-            },
-            {
-              from: ['ui'],
-              disallow: ['features'],
-              message: 'Only Compose components can use feature hooks',
-            },
-            {
-              from: ['widgets'],
-              allow: ['features'],
-              message: 'Only Compose components can use feature hooks',
-            },
-            {
-              from: [
-                'features',
-                'adapters',
-                'models',
-                'ui',
-                'widgets',
-                'screens',
-                'navigation',
-              ],
-              allow: ['shared'],
-              message: 'Modules can import from shared',
-            },
-            {
-              from: [
-                'features',
-                'adapters',
-                'models',
-                'ui',
-                'widgets',
-                'screens',
-                'navigation',
-              ],
-              allow: ['common'],
-              message: 'Modules can import from modules/Common',
-            },
-            {
-              from: [
-                'features',
-                'adapters',
-                'models',
-                'ui',
-                'widgets',
-                'screens',
-              ],
-              disallow: ['modules'],
-              message:
-                'Modules cannot import submodules from other modules except Common',
-            },
-            {
-              from: ['features'],
-              allow: ['shared', 'adapters'],
-              message:
-                'Features can only use shared modules and adapters for data transformation',
-            },
-            {
-              from: ['adapters'],
-              allow: ['shared'],
-              message:
-                'Adapters can only use shared modules for data transformation',
-            },
+          ],
+        },
+      ],
+    },
+  },
+  // Allow models to have internal imports
+  {
+    files: ['**/model/**/index.ts'],
+    rules: {
+      'boundaries/element-types': [
+        2,
+        {
+          default: 'disallow',
+          rules: [
             {
               from: ['models'],
-              disallow: [
-                'shared',
-                'features',
-                'adapters',
-                'ui',
-                'widgets',
-                'screens',
-                'navigation',
-              ],
-              message:
-                'Models can only contain UI interfaces/types with UI prefix and cannot import from other layers',
-            },
-            {
-              from: ['ui'],
-              allow: ['models'],
-              disallow: [
-                'shared',
-                'features',
-                'adapters',
-                'widgets',
-                'screens',
-                'navigation',
-              ],
-              message:
-                'UI components can only use local models and cannot use features or other modules',
-            },
-            {
-              from: ['widgets'],
-              allow: ['ui', 'features', 'models'],
-              disallow: ['adapters', 'screens', 'navigation'],
-              message:
-                'Widgets can use UI components, features, and models, but not adapters',
-            },
-            {
-              from: ['screens'],
-              allow: ['widgets'],
-              disallow: ['ui', 'features', 'adapters', 'models'],
-              message: 'Screens can only use widgets',
-            },
-            {
-              from: ['navigation'],
-              allow: ['screens', 'shared'],
-              disallow: ['ui', 'features', 'adapters', 'models', 'widgets'],
-              message: 'Navigation can only use screens and shared modules',
-            },
-            {
-              from: ['shared'],
-              allow: ['shared'],
-              message: 'Shared modules can only use other shared modules',
-            },
-          ],
-        },
-      ],
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: [
-                '../features',
-                '../features/*',
-                './features',
-                './features/*',
-                '**/features',
-                '**/features/*',
-              ],
-              message:
-                'Only Compose components and module index files can use feature hooks',
+              allow: ['models', 'shared', 'api'],
+              message: 'Model index files can re-export other models',
             },
           ],
         },
       ],
     },
   },
+  // Relax rules for shared layer index files
   {
-    files: ['**/*Compose*.tsx'],
-    rules: {
-      'no-restricted-imports': 'off',
-    },
-  },
-  {
-    files: ['**/modules/*/index.ts'],
-    rules: {
-      'no-restricted-imports': 'off',
-    },
-  },
-  {
-    files: ['**/modules/*/@*/index.ts'],
+    files: ['**/shared/**/index.ts'],
     rules: {
       'no-restricted-imports': 'off',
     },

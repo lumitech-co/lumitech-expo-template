@@ -1,1 +1,1 @@
-export * from './useUpdateUserModel';
+export * from "./useUpdateUserModel";

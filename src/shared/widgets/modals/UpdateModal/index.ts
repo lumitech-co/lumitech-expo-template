@@ -1,1 +1,1 @@
-export { UpdateModal } from './UpdateModal';
+export { UpdateModal } from "./UpdateModal";
