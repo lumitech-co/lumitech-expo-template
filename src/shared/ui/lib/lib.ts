@@ -1,4 +1,4 @@
-import { BoxProps, TextProps, Theme, TouchableOpacityProps } from '../types';
+import { BoxProps, TextProps, Theme, TouchableOpacityProps } from './types';
 import { CommonStyleSchema } from './style-schema';
 
 type CommonProps = BoxProps | TouchableOpacityProps | TextProps;

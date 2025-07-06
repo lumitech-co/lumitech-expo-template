@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import { View } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
 import { separateProps, transformComponentStyle } from '../lib';
-import { BoxProps, ViewStyleWithColors } from '../types';
+import { BoxProps, ViewStyleWithColors } from '../lib/types';
 import { CommonStyleSchema } from '../lib/style-schema';
 
 export const Box = forwardRef<View, BoxProps>(

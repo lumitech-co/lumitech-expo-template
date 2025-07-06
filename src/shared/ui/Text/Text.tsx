@@ -2,7 +2,7 @@
 import React, { forwardRef } from 'react';
 import { Text as BaseText } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
-import { TextProps, TextStyleWithColors } from '../types';
+import { TextProps, TextStyleWithColors } from '../lib/types';
 import { transformComponentStyle, separateProps } from '../lib';
 import { CommonStyleSchema } from '../lib/style-schema';
 

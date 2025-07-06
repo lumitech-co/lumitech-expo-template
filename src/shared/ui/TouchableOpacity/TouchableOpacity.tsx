@@ -2,9 +2,9 @@
 import React, { forwardRef } from 'react';
 import { TouchableOpacity as BaseTouchableOpacity, View } from 'react-native';
 import { createStyleSheet, useStyles } from 'react-native-unistyles';
-import { TouchableOpacityProps, ViewStyleWithColors } from '../types';
 import { separateProps, transformComponentStyle } from '../lib';
 import { CommonStyleSchema } from '../lib/style-schema';
+import { TouchableOpacityProps, ViewStyleWithColors } from '../lib/types';
 
 export const TouchableOpacity = forwardRef<View, TouchableOpacityProps>(
   ({ style, children, ...rest }, ref) => {
