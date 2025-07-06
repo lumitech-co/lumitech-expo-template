@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import {  PaginationParams, PaginatedResponse } from "../AuthService";
+import {  PaginationParams, PaginatedResponse } from "../models";
 import { AuthService } from "../AuthService";
 import { QUERY_KEYS } from "../queryKeys";
 import { AxiosError } from "axios";
