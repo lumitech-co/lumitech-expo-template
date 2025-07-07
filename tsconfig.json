@@ -4,39 +4,42 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
       "assets": ["assets/index"],
       "assets/*": ["assets/*"],
+
       "modules": ["src/modules/index"],
       "modules/*": ["src/modules/*"],
+
       "api": ["src/shared/api/index"],
       "api/*": ["src/shared/api/*"],
+
       "hooks": ["src/shared/hooks/index"],
       "hooks/*": ["src/shared/hooks/*"],
+
       "lib": ["src/shared/lib/index"],
       "lib/*": ["src/shared/lib/*"],
-      "modals": ["src/shared/widgets/modals/index"],
-      "modals/*": ["src/shared/widgets/modals/*"],
+
       "providers": ["src/shared/providers/index"],
       "providers/*": ["src/shared/providers/*"],
+
       "services": ["src/shared/services/index"],
       "services/*": ["src/shared/services/*"],
-      "stores": ["src/shared/stores/index"],
-      "stores/*": ["src/shared/stores/*"],
+
       "themes": ["src/shared/themes/index"],
       "themes/*": ["src/shared/themes/*"],
-      "translations": ["src/shared/translations/index"],
-      "translations/*": ["src/shared/translations/*"],
-      "types": ["src/shared/types/index"],
-      "types/*": ["src/shared/types/*"],
+
       "ui": ["src/shared/ui/index"],
       "ui/*": ["src/shared/ui/*"],
+
       "shared": ["src/shared/index"],
       "shared/*": ["src/shared/*"],
+
       "model": ["src/model/index"],
       "model/*": ["src/model/*"],
+
       "view-models": ["src/view-models/index"],
       "view-models/*": ["src/view-models/*"],
+
       "widgets": ["src/shared/widgets/index"],
       "widgets/*": ["src/shared/widgets/*"]
     }
