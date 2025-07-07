@@ -23,7 +23,7 @@ module.exports = function (api) {
             types: './src/shared/types',
             ui: './src/shared/ui',
             shared: './src/shared',
-            models: './src/model',
+            model: './src/model',
             'view-models': './src/view-models',
             widgets: './src/shared/widgets',
           },

@@ -5,7 +5,7 @@ import {
   LoginRequest,
   useAuthStore,
   useSignInMutationAuthService,
-} from "models";
+} from "model";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),

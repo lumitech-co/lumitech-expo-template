@@ -4,7 +4,7 @@ import {
   useSelectUserId,
   useUserStoreSelectors,
   useUpdateUserMutation,
-} from "models";
+} from "model";
 import { useMutationEvents } from "api";
 
 export const useUpdateUser = () => {

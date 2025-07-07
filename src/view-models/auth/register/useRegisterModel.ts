@@ -5,7 +5,7 @@ import {
   useSignUpMutationAuthService,
   useAuthStore,
   RegisterRequest,
-} from "models";
+} from "model";
 
 const registerSchema = z
   .object({

@@ -1,4 +1,4 @@
-import { useAuthStore } from 'models';
+import { useAuthStore } from 'model';
 import { resetAllStores } from 'lib/Zustand';
 import axios, { AxiosError } from 'axios';
 import { ExceptionService } from 'services';

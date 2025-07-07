@@ -13,7 +13,7 @@ import { DefaultTheme } from "themes";
 import { breakpoints } from "themes";
 import { modalStack } from "widgets/modals";
 import { queryClient } from "api";
-import { useSelectAuthentication } from "models";
+import { useSelectAuthentication } from "model";
 
 UnistylesRegistry.addBreakpoints(breakpoints).addThemes({
   defaultTheme: DefaultTheme,
