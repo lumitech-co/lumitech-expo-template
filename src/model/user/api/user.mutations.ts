@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { UserService } from "./user.api";
+import { UserApi } from "./user.api";
 import {
   CreateUserResponse,
   CreateUserRequest,
@@ -11,7 +11,7 @@ import {
 
 export const useCreateUserMutation = () => {
   return useMutation<CreateUserResponse, AxiosError, CreateUserRequest>({
-    mutationFn: UserService.createUser,
+    mutationFn: UserApi.createUser,
   });
 };
 
@@ -21,24 +21,24 @@ export const useUpdateUserMutation = () => {
     AxiosError,
     { id: number; data: UpdateUserRequest }
   >({
-    mutationFn: ({ id, data }) => UserService.updateUser(id, data),
+    mutationFn: ({ id, data }) => UserApi.updateUser(id, data),
   });
 };
 
 export const useUpdateCurrentUserMutation = () => {
   return useMutation<UpdateUserResponse, AxiosError, UpdateUserRequest>({
-    mutationFn: UserService.updateCurrentUser,
+    mutationFn: UserApi.updateCurrentUser,
   });
 };
 
 export const useDeleteUserMutation = () => {
   return useMutation<DeleteUserResponse, AxiosError, number>({
-    mutationFn: UserService.deleteUser,
+    mutationFn: UserApi.deleteUser,
   });
 };
 
 export const useDeleteCurrentUserMutation = () => {
   return useMutation<DeleteUserResponse, AxiosError, void>({
-    mutationFn: UserService.deleteCurrentUser,
+    mutationFn: UserApi.deleteCurrentUser,
   });
 };

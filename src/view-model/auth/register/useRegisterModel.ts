@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
-  useSignUpMutationAuthService,
+  useSignUpMutation,
   useAuthStore,
   RegisterRequest,
 } from "model";
@@ -25,7 +25,7 @@ type RegisterForm = z.infer<typeof registerSchema>;
 
 export const useRegisterModel = () => {
   const { setTokens } = useAuthStore();
-  const registerMutation = useSignUpMutationAuthService();
+  const registerMutation = useSignUpMutation();
 
   const form = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),

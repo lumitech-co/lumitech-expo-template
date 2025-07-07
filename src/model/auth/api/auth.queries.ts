@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { AuthService } from "./auth.api";
+import { AuthApi } from "./auth.api";
 import { QUERY_KEYS } from "./queryKeys";
 import { LoginResponse } from "../auth.types";
 
 export const useHealthCheck = () => {
   return useQuery<LoginResponse, typeof AxiosError>({
-    queryFn: AuthService.ping,
+    queryFn: AuthApi.ping,
     queryKey: QUERY_KEYS.HEALTHCHECK,
   });
 };

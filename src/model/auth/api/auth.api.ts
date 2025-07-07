@@ -27,7 +27,7 @@ const ping = async () => {
   return response?.data;
 };
 
-export const AuthService = {
+export const AuthApi = {
   login,
   register,
   ping,

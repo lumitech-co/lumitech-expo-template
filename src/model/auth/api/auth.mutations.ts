@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { AuthService } from "./auth.api";
+import { AuthApi } from "./auth.api";
 import {
   LoginRequest,
   LoginResponse,
@@ -8,14 +8,14 @@ import {
   RegisterResponse,
 } from "../auth.types";
 
-export const useSignInMutationAuthService = () => {
+export const useSignInMutation = () => {
   return useMutation<LoginResponse, typeof AxiosError, LoginRequest>({
-    mutationFn: AuthService.login,
+    mutationFn: AuthApi.login,
   });
 };
 
-export const useSignUpMutationAuthService = () => {
+export const useSignUpMutation = () => {
   return useMutation<RegisterResponse, typeof AxiosError, RegisterRequest>({
-    mutationFn: AuthService.register,
+    mutationFn: AuthApi.register,
   });
 };

@@ -1,2 +1,2 @@
-export { useLoginModel } from "./login/useLoginModel";
-export { useRegisterModel } from "./register/useRegisterModel";
+export * from "./login";
+export * from "./register";

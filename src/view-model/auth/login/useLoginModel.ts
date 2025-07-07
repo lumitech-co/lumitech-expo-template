@@ -4,7 +4,7 @@ import { z } from "zod";
 import {
   LoginRequest,
   useAuthStore,
-  useSignInMutationAuthService,
+  useSignInMutation,
 } from "model";
 
 const loginSchema = z.object({
@@ -16,7 +16,7 @@ type LoginForm = z.infer<typeof loginSchema>;
 
 export const useLoginModel = () => {
   const { setTokens } = useAuthStore();
-  const loginMutation = useSignInMutationAuthService();
+  const loginMutation = useSignInMutation();
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),

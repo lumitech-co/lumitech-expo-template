@@ -7,7 +7,7 @@ import {
 } from "model";
 import { useMutationEvents } from "api";
 
-export const useUpdateUser = () => {
+export const useUpdateUserModel = () => {
   const updateUserMutation = useUpdateUserMutation();
   const setUser = useUserStoreSelectors.use.setUser();
 

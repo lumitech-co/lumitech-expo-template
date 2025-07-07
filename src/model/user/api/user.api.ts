@@ -60,7 +60,7 @@ const deleteCurrentUser = async () => {
   return response?.data;
 };
 
-export const UserService = {
+export const UserApi = {
   createUser,
   getUser,
   getUserById,
