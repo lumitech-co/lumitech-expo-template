@@ -15,7 +15,8 @@
     "android:uninstall": "cd android && ./gradlew uninstallAll",
     "android:clean": "cd android && ./gradlew clean && cd ../",
     "android:apk": "cd android && ./gradlew assembleRelease && cd ../",
-    "android:bundle": "cd android && ./gradlew bundleRelease && cd ../"
+    "android:bundle": "cd android && ./gradlew bundleRelease && cd ../",
+    "prepare": "husky"
   },
   "dependencies": {
     "@gorhom/portal": "^1.0.14",
