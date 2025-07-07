@@ -37,8 +37,8 @@
       "model": ["src/model/index"],
       "model/*": ["src/model/*"],
 
-      "view-models": ["src/view-models/index"],
-      "view-models/*": ["src/view-models/*"],
+      "view-model": ["src/view-model/index"],
+      "view-model/*": ["src/view-model/*"],
 
       "widgets": ["src/shared/widgets/index"],
       "widgets/*": ["src/shared/widgets/*"]

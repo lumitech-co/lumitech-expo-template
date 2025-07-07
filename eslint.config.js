@@ -55,8 +55,8 @@ module.exports = [
           pattern: './src/model/**',
         },
         {
-          type: 'view-models',
-          pattern: './src/view-models/**',
+          type: 'view-model',
+          pattern: './src/view-model/**',
         },
         {
           type: 'services',
@@ -150,23 +150,23 @@ module.exports = [
             // App (Views) Layer Rules
             {
               from: ['app'],
-              allow: ['view-models', 'widgets', 'ui', 'shared'],
-              message: 'Views can only import from view-models, widgets, ui, and shared layers',
+              allow: ['view-model', 'widgets', 'ui', 'shared'],
+              message: 'Views can only import from view-model, widgets, ui, and shared layers',
             },
             
-            // View-Models Layer Rules
+            // View-Model Layer Rules
             {
-              from: ['view-models'],
+              from: ['view-model'],
               allow: ['models', 'shared'],
-              disallow: ['app', 'view-models'],
-              message: 'View-models can only import from models and shared layers, not from views or other view-models',
+              disallow: ['app', 'view-model'],
+              message: 'View-model can only import from models and shared layers, not from views or other view-model',
             },
             
             // Models Layer Rules
             {
               from: ['models'],
               allow: ['shared', 'api'],
-              disallow: ['app', 'view-models', 'widgets', 'ui'],
+              disallow: ['app', 'view-model', 'widgets', 'ui'],
               message: 'Models can only import from shared and api layers, not from presentation layers',
             },
             
@@ -174,7 +174,7 @@ module.exports = [
             {
               from: ['services'],
               allow: ['shared', 'models'],
-              disallow: ['app', 'view-models', 'widgets', 'ui'],
+              disallow: ['app', 'view-model', 'widgets', 'ui'],
               message: 'Services can only import from shared and models layers',
             },
             
@@ -182,7 +182,7 @@ module.exports = [
             {
               from: ['widgets'],
               allow: ['ui', 'shared'],
-              disallow: ['app', 'view-models', 'models', 'services'],
+              disallow: ['app', 'view-model', 'models', 'services'],
               message: 'Widgets can only import from ui and shared layers, not from business logic layers',
             },
             
@@ -190,7 +190,7 @@ module.exports = [
             {
               from: ['ui'],
               allow: ['shared'],
-              disallow: ['app', 'view-models', 'models', 'services', 'widgets'],
+              disallow: ['app', 'view-model', 'models', 'services', 'widgets'],
               message: 'UI components can only import from shared layer',
             },
             
@@ -198,7 +198,7 @@ module.exports = [
             {
               from: ['api'],
               allow: ['shared'],
-              disallow: ['app', 'view-models', 'models', 'services', 'widgets', 'ui'],
+              disallow: ['app', 'view-model', 'models', 'services', 'widgets', 'ui'],
               message: 'API layer can only import from shared utilities',
             },
             
@@ -213,7 +213,7 @@ module.exports = [
             {
               from: ['stores'],
               allow: ['shared'],
-              disallow: ['app', 'view-models', 'models', 'services', 'widgets', 'ui', 'api'],
+              disallow: ['app', 'view-model', 'models', 'services', 'widgets', 'ui', 'api'],
               message: 'Stores can only import from shared utilities',
             },
           ],
@@ -233,8 +233,8 @@ module.exports = [
               message: 'Use "models/*" alias instead of relative imports to model layer',
             },
             {
-              group: ['../view-models/*', '../../view-models/*', '**/view-models/*'],
-              message: 'Use "view-models/*" alias instead of relative imports to view-models layer',
+              group: ['../view-model/*', '../../view-model/*', '**/view-model/*'],
+              message: 'Use "view-model/*" alias instead of relative imports to view-model layer',
             },
             {
               group: ['../shared/widgets/*', '../../shared/widgets/*', '**/shared/widgets/*'],
@@ -257,9 +257,9 @@ module.exports = [
       ],
     },
   },
-  // Allow view-models to import from each other in specific cases
+  // Allow view-model to import from each other in specific cases
   {
-    files: ['**/view-models/**/index.ts'],
+    files: ['**/view-model/**/index.ts'],
     rules: {
       'boundaries/element-types': [
         2,
@@ -267,9 +267,9 @@ module.exports = [
           default: 'disallow',
           rules: [
             {
-              from: ['view-models'],
-              allow: ['view-models', 'models', 'shared'],
-              message: 'View-model index files can re-export other view-models',
+              from: ['view-model'],
+              allow: ['view-model', 'models', 'shared'],
+              message: 'View-model index files can re-export other view-model',
             },
           ],
         },

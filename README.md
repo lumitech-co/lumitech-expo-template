@@ -14,7 +14,7 @@ This template implements a **MVVM (Model-View-ViewModel)** architecture pattern 
 
 - **Model** (`src/model/`) - Data layer with business logic, API services, and state management
 - **View** (`src/app/`) - UI layer with screens and components  
-- **ViewModel** (`src/view-models/`) - Business logic layer that connects Views to Models
+- **ViewModel** (`src/view-model/`) - Business logic layer that connects Views to Models
 - **Services** (`src/services/`) - Shared services and utilities
 - **Widgets** (`src/shared/widgets/`) - Reusable UI components for specific features
 
@@ -58,11 +58,11 @@ src/
 │       ├── api/
 │       ├── store/
 │       └── user.types.ts
-├── view-models/           # ViewModel Layer (MVVM)
-│   ├── auth/              # Authentication view-models
+├── view-model/            # ViewModel Layer (MVVM)
+│   ├── auth/              # Authentication view-model
 │   │   ├── login/         # Login business logic
 │   │   └── register/      # Registration business logic
-│   └── user/              # User view-models
+│   └── user/              # User view-model
 ├── services/              # Service Layer
 │   ├── ApiService/        # API service layer
 │   ├── ModalService/      # Modal management
@@ -116,7 +116,7 @@ export const useSignInMutationAuthService = () => {
 ViewModels contain presentation logic and connect Views to Models:
 
 ```typescript
-// src/view-models/auth/login/useLoginModel.ts
+// src/view-model/auth/login/useLoginModel.ts
 export const useLoginModel = () => {
   const { setTokens } = useAuthStore();
   const loginMutation = useSignInMutationAuthService();
@@ -147,7 +147,7 @@ Views are pure UI components that consume ViewModels:
 
 ```typescript
 // src/app/(auth)/login.tsx
-import { useLoginModel } from 'view-models/auth';
+import { useLoginModel } from 'view-model/auth';
 
 export default function LoginScreen() {
   const { form, onSubmit, isLoading, error } = useLoginModel();
@@ -176,7 +176,7 @@ The template includes comprehensive path aliases for clean imports:
 ```typescript
 // Available aliases:
 import { useAuthStore } from 'models/auth';           // src/model/*
-import { useLoginModel } from 'view-models/auth';     // src/view-models/*
+import { useLoginModel } from 'view-model/auth';      // src/view-model/*
 import { LoginModal } from 'widgets/modals';          // src/shared/widgets/*
 import { baseQuery } from 'api';                      // src/shared/api/*
 import { Button } from 'ui';                          // src/shared/ui/*
@@ -311,7 +311,7 @@ export const Fonts = {
 ### Adding New Features
 
 1. **Create Model** - Add domain logic in `src/model/[domain]/`
-2. **Create ViewModel** - Add presentation logic in `src/view-models/[domain]/`
+2. **Create ViewModel** - Add presentation logic in `src/view-model/[domain]/`
 3. **Create View** - Add UI in `src/app/[route].tsx`
 4. **Update Types** - Add TypeScript interfaces
 

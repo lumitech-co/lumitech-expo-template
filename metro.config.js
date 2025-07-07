@@ -25,7 +25,7 @@ const config = {
       ui: './src/shared/ui',
       shared: './src/shared',
       model: './src/model',
-      'view-models': './src/view-models',
+      'view-model': './src/view-model',
       widgets: './src/shared/widgets',
     },
   },
