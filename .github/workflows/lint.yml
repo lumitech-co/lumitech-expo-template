@@ -1,0 +1,39 @@
+name: Lint & Build
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - edited
+      - reopened
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Code Linting
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typescript
+
+      - name: Build application
+        run: npm run build
