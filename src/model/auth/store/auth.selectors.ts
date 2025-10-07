@@ -1,7 +1,19 @@
-import { createSelectors } from 'lib/Zustand';
-import { useAuthStore } from './auth.store';
+import { use$ } from "@legendapp/state/react";
 
-export const useAuthStoreSelectors = createSelectors(useAuthStore);
+import { authStore$ } from "./auth.store";
 
-export const useSelectAuthentication = () =>
-  useAuthStoreSelectors(state => state.authentication);
+export const useSelectUserStore = () => {
+  return authStore$;
+};
+
+export const useSelectUserId = () => {
+  return use$(authStore$.user.id);
+};
+
+export const useSelectToken = () => {
+  return authStore$.authentication.accessToken.get();
+};
+
+export const useSelectUser = () => {
+  return use$(authStore$.user);
+};

@@ -15,7 +15,7 @@ const loginSchema = z.object({
 type LoginForm = z.infer<typeof loginSchema>;
 
 export const useLoginModel = () => {
-  const { setTokens } = useAuthStore();
+  const { setToken } = useAuthStore();
   const loginMutation = useSignInMutation();
 
   const form = useForm<LoginForm>({
@@ -35,7 +35,7 @@ export const useLoginModel = () => {
 
       const response = await loginMutation.mutateAsync(loginRequest);
 
-      setTokens(response.authentication);
+      setToken(response.authentication);
 
       return response;
     } catch (error) {

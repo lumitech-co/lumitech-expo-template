@@ -24,7 +24,7 @@ const registerSchema = z
 type RegisterForm = z.infer<typeof registerSchema>;
 
 export const useRegisterModel = () => {
-  const { setTokens } = useAuthStore();
+  const { setToken } = useAuthStore();
   const registerMutation = useSignUpMutation();
 
   const form = useForm<RegisterForm>({
@@ -47,7 +47,7 @@ export const useRegisterModel = () => {
 
       const response = await registerMutation.mutateAsync(registerRequest);
 
-      setTokens(response.authentication);
+      setToken(response.authentication);
 
       return response;
     } catch (error) {

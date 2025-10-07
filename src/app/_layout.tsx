@@ -13,14 +13,14 @@ import { DefaultTheme } from "themes";
 import { breakpoints } from "themes";
 import { modalStack } from "widgets/modals";
 import { queryClient } from "api";
-import { useSelectAuthentication } from "model";
+import { useSelectToken } from "model";
 
 UnistylesRegistry.addBreakpoints(breakpoints).addThemes({
   defaultTheme: DefaultTheme,
 });
 
 export default function RootLayout() {
-  const { accessToken } = useSelectAuthentication();
+  const token = useSelectToken();
 
   return (
     <UnistylesProvider>
@@ -30,7 +30,7 @@ export default function RootLayout() {
           <SafeAreaProvider>
             <QueryClientProvider client={queryClient}>
               <ModalProvider stack={modalStack}>
-                {accessToken ? (
+                {token ? (
                   <Stack screenOptions={{ headerShown: false }}>
                     <Stack.Screen
                       name="(tabs)"
