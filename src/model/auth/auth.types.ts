@@ -1,8 +1,12 @@
-import { User } from "../user";
-
 export interface Authentication {
   accessToken: string;
   refreshToken: string;
+}
+
+export interface User {
+    email: string;
+  id: string;
+  firstName: string;
 }
 
 export interface RefreshTokenRequest {
@@ -25,15 +29,6 @@ export interface RegisterResponse {
   user: User;
 }
 
-export interface LoginResponse {
-  authentication: Authentication;
-  user: User;
-}
+export interface LoginResponse extends RegisterResponse {}
 
-export interface AuthState {
-  authentication: Authentication;
-}
-
-export interface AuthStore extends AuthState {
-  setTokens: (tokens: Authentication) => void;
-}
+export interface AuthState extends RegisterResponse {}

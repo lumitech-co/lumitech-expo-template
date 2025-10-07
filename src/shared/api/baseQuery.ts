@@ -1,5 +1,4 @@
-import { useAuthStore } from 'model';
-import { resetAllStores } from 'lib/Zustand';
+import { useSelectToken } from 'model';
 import axios, { AxiosError } from 'axios';
 import { ExceptionService } from 'services';
 
@@ -10,11 +9,11 @@ const baseQuery = axios.create({
 });
 
 baseQuery.interceptors.request.use(config => {
-  const { authentication } = useAuthStore.getState();
+  const token = useSelectToken()
 
-  if (authentication.accessToken) {
+  if (token) {
     config.headers.Authorization = `Bearer ${
-      authentication.accessToken
+      token
     }`;
   }
 
@@ -24,12 +23,12 @@ baseQuery.interceptors.request.use(config => {
 baseQuery.interceptors.response.use(
   response => response,
   async (error: AxiosError) => {
-    const { authentication } = useAuthStore.getState();
+    const token = useSelectToken()
 
-    if (authentication.accessToken && error?.response?.status === 401) {
+    if (token && error?.response?.status === 401) {
       ExceptionService.errorResolver(error);
 
-      resetAllStores();
+      // resetAllStores();
     }
 
     return Promise.reject(error);

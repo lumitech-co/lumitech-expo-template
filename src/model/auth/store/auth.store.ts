@@ -1,28 +1,45 @@
-import { MMKV } from 'react-native-mmkv';
-import { immer } from 'zustand/middleware/immer';
-import { Authentication, AuthState, AuthStore } from '../auth.types';
-import { createStore } from 'lib/Zustand';
-
-const persistStorage = new MMKV({
-  id: 'AUTH',
-});
+import { observable } from "@legendapp/state";
+import { ObservablePersistMMKV } from "@legendapp/state/persist-plugins/mmkv";
+import { syncObservable } from "@legendapp/state/sync";
+import { Authentication, AuthState, User } from "../auth.types";
 
 const initialState: AuthState = {
+  user: {
+    email: "",
+  id: "",
+  firstName: "",
+  },
   authentication: {
     accessToken: '',
-    refreshToken: '',
-  },
+    refreshToken: ''
+  }
 };
 
-export const useAuthStore = createStore<AuthStore>(
-  immer(set => ({
-    ...initialState,
-    setTokens: (tokens: Authentication) => {
-      set(state => {
-        state.authentication = tokens;
-      });
-    },
-  })),
-  'AUTH_STORAGE',
-  persistStorage,
-);
+export const authStore$ = observable(initialState);
+
+export const useAuthStore = () => {
+  const resetUserStorePersist = async () => {
+    authStore$.set(initialState);
+  };
+
+  const setUser = (user: User) => {
+    authStore$.user.set(user);
+  };
+
+  const setToken = (token: Authentication) => {
+    authStore$.authentication.set(token);
+  };
+
+  return {
+    resetUserStorePersist,
+    setUser,
+    setToken,
+  };
+};
+
+syncObservable(authStore$, {
+  persist: {
+    name: "AUTH",
+    plugin: ObservablePersistMMKV,
+  },
+});
