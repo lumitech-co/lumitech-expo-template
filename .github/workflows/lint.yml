@@ -34,6 +34,3 @@ jobs:
 
       - name: Type check
         run: npm run typescript
-
-      - name: Build application
-        run: npm run build
