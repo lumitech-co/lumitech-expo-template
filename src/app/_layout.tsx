@@ -1,19 +1,19 @@
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "api";
+import { Stack } from "expo-router";
+import "lib/i18n";
+import { useSelectToken } from "model";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import { KeyboardProvider } from "react-native-keyboard-controller";
-import { UnistylesProvider, UnistylesRegistry } from "react-native-unistyles";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "sonner-native";
-import { ReducedMotionConfig, ReduceMotion } from "react-native-reanimated";
 import { ModalProvider } from "react-native-modalfy";
-import { Stack } from "expo-router";
-import { DefaultTheme } from "themes";
-import { breakpoints } from "themes";
+import { ReducedMotionConfig, ReduceMotion } from "react-native-reanimated";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { UnistylesProvider, UnistylesRegistry } from "react-native-unistyles";
+import { Toaster } from "sonner-native";
+import { breakpoints, DefaultTheme } from "themes";
 import { modalStack } from "widgets/modals";
-import { queryClient } from "api";
-import { useSelectToken } from "model";
 
 UnistylesRegistry.addBreakpoints(breakpoints).addThemes({
   defaultTheme: DefaultTheme,
@@ -21,6 +21,7 @@ UnistylesRegistry.addBreakpoints(breakpoints).addThemes({
 
 export default function RootLayout() {
   const token = useSelectToken();
+  const isLoggedIn = !!token;
 
   return (
     <UnistylesProvider>
@@ -30,21 +31,10 @@ export default function RootLayout() {
           <SafeAreaProvider>
             <QueryClientProvider client={queryClient}>
               <ModalProvider stack={modalStack}>
-                {token ? (
-                  <Stack screenOptions={{ headerShown: false }}>
-                    <Stack.Screen
-                      name="(tabs)"
-                      options={{ headerShown: false }}
-                    />
-                  </Stack>
-                ) : (
-                  <Stack screenOptions={{ headerShown: false }}>
-                    <Stack.Screen
-                      name="(auth)"
-                      options={{ headerShown: false }}
-                    />
-                  </Stack>
-                )}
+                <Stack screenOptions={{ headerShown: false }}>
+                  <Stack.Screen name="(auth)" redirect={isLoggedIn} />
+                  <Stack.Screen name="(tabs)" redirect={!isLoggedIn} />
+                </Stack>
               </ModalProvider>
             </QueryClientProvider>
             <Toaster position="top-center" />
