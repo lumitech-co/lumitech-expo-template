@@ -2,7 +2,7 @@
  <img width="500" src="https://github.com/user-attachments/assets/5083ad51-e604-4e2f-949a-e29a2be4bd73" />
 </div>
 
-# [Lumitech](https://lumitech.co/) React Native Template 🌌
+# Lumitech Expo React Native Template 🌌
 
 A modern React Native template built with Expo, implementing **MVVM (Model-View-ViewModel)** architecture for scalable mobile applications with best practices and powerful libraries.
 
