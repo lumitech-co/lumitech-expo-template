@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react';
-import { Text } from 'react-native';
-import { createStyleSheet, useStyles } from 'react-native-unistyles';
-import { Tabs } from 'expo-router';
-import { IconName } from 'react-native-vector-icons';
-import { Icon } from '../../shared/ui';
-import { useTranslation } from 'react-i18next';
+import { Tabs } from "expo-router";
+import React, { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { Text } from "react-native";
+import type { SvgProps } from "react-native-svg";
+import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { BellIcon, UserIcon } from "ui";
 
-const tabIcons: Record<string, IconName> = {
-  alerts: 'alerts',
-  profile: 'account',
+const tabIcons: Record<string, React.FC<SvgProps>> = {
+  alerts: BellIcon,
+  profile: UserIcon,
 };
 
 export default function TabLayout() {
@@ -17,8 +17,8 @@ export default function TabLayout() {
 
   const titles: Record<string, string> = useMemo(
     () => ({
-      alerts: t('screens.alerts'),
-      profile: t('screens.account'),
+      alerts: t("screens.alerts"),
+      profile: t("screens.account"),
     }),
     [t],
   );
@@ -36,22 +36,15 @@ export default function TabLayout() {
           <Text style={styles.text}>{titles[route.name]}</Text>
         ),
         tabBarIcon: ({ focused }) => {
-          const iconColor = focused ? 'black' : 'gray_400';
+          const IconComponent = tabIcons[route.name];
+          const iconColor = focused ? theme.colors.black : theme.colors.gray_400;
 
-          return (
-            <Icon name={tabIcons[route.name]} size={22} color={iconColor} />
-          );
+          return <IconComponent width={22} height={22} color={iconColor} />;
         },
       })}
       backBehavior="history">
-      <Tabs.Screen
-        name="alerts"
-        options={{ headerShown: false }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{ headerShown: false }}
-      />
+      <Tabs.Screen name="alerts" options={{ headerShown: false }} />
+      <Tabs.Screen name="profile" options={{ headerShown: false }} />
     </Tabs>
   );
 }

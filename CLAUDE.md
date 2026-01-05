@@ -239,8 +239,6 @@ RouteService.reset("ROUTE_NAME");
 
 Check `src/shared/services/RouteService/models/Routes.ts` for available routes.
 
-## i18n
-
 ### Usage in Components
 ```typescript
 import { useTranslation } from "react-i18next";
@@ -251,6 +249,65 @@ const { t } = useTranslation();
 
 ### Translation File Location
 `src/shared/translations/en.json`
+
+## SVG Icons
+
+### Icon Location
+SVG icons are stored in `src/shared/ui/icons/` and exported from `ui`.
+
+### Using Icons Directly
+```typescript
+import { BellIcon, UserIcon } from "ui";
+
+<BellIcon width={24} height={24} color="#000" />
+```
+
+### Using SvgIcon Component (with theme colors)
+```typescript
+import { SvgIcon, BellIcon } from "ui";
+
+<SvgIcon icon={BellIcon} size={24} color="black_950" />
+```
+
+### Adding New Icons
+1. Add SVG file to `src/shared/ui/icons/`
+2. Export from `src/shared/ui/icons/index.ts`
+
+## Routing & Authentication
+
+### Protected Routes with Redirect
+Use the `redirect` prop on `Stack.Screen` to handle auth-based routing:
+
+```typescript
+// src/app/_layout.tsx
+export default function RootLayout() {
+  const token = useSelectToken();
+  const isLoggedIn = !!token;
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(auth)" redirect={isLoggedIn} />
+      <Stack.Screen name="(tabs)" redirect={!isLoggedIn} />
+    </Stack>
+  );
+}
+```
+
+### Three-Stack Example (auth + onboarding + tabs)
+```typescript
+const isLoggedIn = !!token;
+const showOnboarding = isLoggedIn && !isOnboarded;
+const showTabs = isLoggedIn && isOnboarded;
+
+<Stack screenOptions={{ headerShown: false }}>
+  <Stack.Screen name="(auth)" redirect={isLoggedIn} />
+  <Stack.Screen name="(onboarding)" redirect={!showOnboarding} />
+  <Stack.Screen name="(tabs)" redirect={!showTabs} />
+</Stack>
+```
+
+### Screen Export Rule
+All screens in `src/app/` MUST use `export default`. Named exports will not work with Expo Router.
 
 ## Naming Conventions
 
