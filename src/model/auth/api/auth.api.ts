@@ -2,6 +2,7 @@ import { baseQuery } from "api";
 import {
   LoginRequest,
   LoginResponse,
+  RefreshTokenRequest,
   RegisterRequest,
   RegisterResponse,
 } from "../auth.types";
@@ -22,6 +23,14 @@ const register = async (params: RegisterRequest) => {
   return response?.data;
 };
 
+const refreshToken = async (params: RefreshTokenRequest) => {
+  const response = await baseQuery.post<LoginResponse>("/auth/refresh", {
+    ...params,
+  });
+
+  return response?.data;
+};
+
 const ping = async () => {
   const response = await baseQuery.get<LoginResponse>("/auth/ping");
   return response?.data;
@@ -30,5 +39,6 @@ const ping = async () => {
 export const AuthApi = {
   login,
   register,
+  refreshToken,
   ping,
 };

@@ -9,13 +9,13 @@ import {
 } from "../auth.types";
 
 export const useSignInMutation = () => {
-  return useMutation<LoginResponse, typeof AxiosError, LoginRequest>({
+  return useMutation<LoginResponse, AxiosError, LoginRequest>({
     mutationFn: AuthApi.login,
   });
 };
 
 export const useSignUpMutation = () => {
-  return useMutation<RegisterResponse, typeof AxiosError, RegisterRequest>({
+  return useMutation<RegisterResponse, AxiosError, RegisterRequest>({
     mutationFn: AuthApi.register,
   });
 };

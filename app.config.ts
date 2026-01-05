@@ -1,0 +1,58 @@
+import { ConfigContext, ExpoConfig } from "expo/config";
+
+const APP_ENV = process.env.APP_ENV || "development";
+
+export default ({ config }: ConfigContext): ExpoConfig => {
+  return {
+    ...config,
+    name: "lumitech-expo-template",
+    slug: "lumitech-expo-template",
+    version: "1.0.0",
+    orientation: "portrait",
+    icon: "./src/assets/images/logo.png",
+    scheme: "lumitechexpotemplate",
+    userInterfaceStyle: "automatic",
+    newArchEnabled: true,
+    ios: {
+      supportsTablet: false,
+      bundleIdentifier: "com.app.lumitechexpotemplate",
+    },
+    android: {
+      adaptiveIcon: {
+        foregroundImage: "./src/assets/images/logo.png",
+        backgroundColor: "#ffffff",
+      },
+      edgeToEdgeEnabled: true,
+      package: "com.app.lumitechexpotemplate",
+    },
+    plugins: [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          image: "./src/assets/images/logo.png",
+          imageWidth: 200,
+          resizeMode: "contain",
+          backgroundColor: "#ffffff",
+        },
+      ],
+      [
+        "expo-font",
+        {
+          fonts: [
+            "./src/assets/fonts/icomoon.ttf",
+            "./src/assets/fonts/DMSans-Bold.ttf",
+            "./src/assets/fonts/DMSans-Medium.ttf",
+            "./src/assets/fonts/DMSans-Regular.ttf",
+          ],
+        },
+      ],
+    ],
+    extra: {
+      eas: {
+        projectId: "", // Add your EAS project ID here
+      },
+      appEnv: APP_ENV,
+    },
+  };
+};

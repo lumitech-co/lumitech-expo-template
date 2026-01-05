@@ -1,19 +1,19 @@
 import { use$ } from "@legendapp/state/react";
 
-import { authStore$ } from "./auth.store";
+import { authStore } from "./auth.store";
 
 export const useSelectUserStore = () => {
-  return authStore$;
+  return authStore;
 };
 
 export const useSelectUserId = () => {
-  return use$(authStore$.user.id);
+  return use$(authStore.user.id);
 };
 
 export const useSelectToken = () => {
-  return authStore$.authentication.accessToken.get();
+  return authStore.authentication.accessToken.get();
 };
 
 export const useSelectUser = () => {
-  return use$(authStore$.user);
+  return use$(authStore.user);
 };

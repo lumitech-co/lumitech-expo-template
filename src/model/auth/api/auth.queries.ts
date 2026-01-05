@@ -5,7 +5,7 @@ import { QUERY_KEYS } from "./queryKeys";
 import { LoginResponse } from "../auth.types";
 
 export const useHealthCheck = () => {
-  return useQuery<LoginResponse, typeof AxiosError>({
+  return useQuery<LoginResponse, AxiosError>({
     queryFn: AuthApi.ping,
     queryKey: QUERY_KEYS.HEALTHCHECK,
   });

@@ -1,13 +1,6 @@
-export interface Authentication {
-  accessToken: string;
-  refreshToken: string;
-}
+import type { Authentication, User, AuthState } from "lib";
 
-export interface User {
-    email: string;
-  id: string;
-  firstName: string;
-}
+export type { Authentication, User, AuthState };
 
 export interface RefreshTokenRequest {
   refreshToken: string;
@@ -30,5 +23,3 @@ export interface RegisterResponse {
 }
 
 export interface LoginResponse extends RegisterResponse {}
-
-export interface AuthState extends RegisterResponse {}

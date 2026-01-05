@@ -1,33 +1,24 @@
-import { observable } from "@legendapp/state";
-import { ObservablePersistMMKV } from "@legendapp/state/persist-plugins/mmkv";
-import { syncObservable } from "@legendapp/state/sync";
-import { Authentication, AuthState, User } from "../auth.types";
+import {
+  authStore,
+  getInitialAuthState,
+  resetAuthStore,
+  type Authentication,
+  type User,
+} from "lib";
 
-const initialState: AuthState = {
-  user: {
-    email: "",
-  id: "",
-  firstName: "",
-  },
-  authentication: {
-    accessToken: '',
-    refreshToken: ''
-  }
-};
-
-export const authStore$ = observable(initialState);
+export { authStore };
 
 export const useAuthStore = () => {
-  const resetUserStorePersist = async () => {
-    authStore$.set(initialState);
+  const resetUserStorePersist = () => {
+    resetAuthStore();
   };
 
   const setUser = (user: User) => {
-    authStore$.user.set(user);
+    authStore.user.set(user);
   };
 
   const setToken = (token: Authentication) => {
-    authStore$.authentication.set(token);
+    authStore.authentication.set(token);
   };
 
   return {
@@ -37,9 +28,4 @@ export const useAuthStore = () => {
   };
 };
 
-syncObservable(authStore$, {
-  persist: {
-    name: "AUTH",
-    plugin: ObservablePersistMMKV,
-  },
-});
+export { getInitialAuthState };
