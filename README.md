@@ -34,7 +34,7 @@ This template implements a **MVVM (Model-View-ViewModel)** architecture pattern 
 - **TypeScript** - Type safety and better development experience
 - **React Native Unistyles** - Theming and styling system
 - **TanStack Query** - Server state management and caching
-- **Zustand** - Lightweight state management with MMKV persistence
+- **Legend State** - High-performance reactive state management with MMKV persistence
 - **React Native Reanimated** - Smooth animations
 - **React Hook Form** - Form management with Zod validation
 - **i18next** - Internationalization support
@@ -92,21 +92,26 @@ The Model layer contains domain-specific business logic, data access, and state 
 
 ```typescript
 // src/model/auth/store/auth.store.ts
-export const useAuthStore = createStore<AuthStore>(
-  immer(set => ({
-    authentication: { accessToken: '', refreshToken: '' },
-    setTokens: (tokens: Authentication) => {
-      set(state => { state.authentication = tokens; });
-    },
-  })),
-  'AUTH_STORAGE',
-  persistStorage,
-);
+import { observable } from "@legendapp/state";
+import { syncObservable } from "@legendapp/state/sync";
+import { ObservablePersistMMKV } from "@legendapp/state/persist-plugins/mmkv";
+
+export const authStore = observable<AuthState>(initialState);
+
+syncObservable(authStore, {
+  persist: { name: "AUTH", plugin: ObservablePersistMMKV },
+});
+
+export const useAuthStore = () => ({
+  setToken: (token: Authentication) => authStore.authentication.set(token),
+  setUser: (user: User) => authStore.user.set(user),
+  resetUserStorePersist: () => authStore.set(initialState),
+});
 
 // src/model/auth/api/auth.mutations.ts
-export const useSignInMutationAuthService = () => {
+export const useSignInMutation = () => {
   return useMutation<LoginResponse, AxiosError, LoginRequest>({
-    mutationFn: AuthService.login,
+    mutationFn: AuthApi.login,
   });
 };
 ```
@@ -261,24 +266,27 @@ const apiUrl = Config.API_URL;
 
 ### Store Architecture
 
-The template uses Zustand with MMKV persistence and automatic selectors:
+The template uses Legend State with MMKV persistence for high-performance reactive state:
 
 ```typescript
-// Auto-generated selectors for optimized re-renders
-export const useAuthStoreSelectors = createSelectors(useAuthStore);
+import { observable } from "@legendapp/state";
+import { use$ } from "@legendapp/state/react";
 
-// Optimized selector usage
-export const useSelectUserId = () =>
-  useAuthStoreSelectors(state => state.user.id);
+// Create observable store
+export const authStore = observable<AuthState>(initialState);
+
+// Reactive selectors with automatic optimization
+export const useSelectUser = () => use$(authStore.user);
+export const useSelectToken = () => authStore.authentication.accessToken.get();
 ```
 
 ### Key Features
 
-- **MMKV Persistence** - Automatic state persistence with encryption
-- **Immer Integration** - Immutable state updates with mutable syntax
-- **Auto Selectors** - Generated selectors for all store properties
+- **MMKV Persistence** - Automatic state persistence with encryption support
+- **Fine-grained Reactivity** - Only re-renders components when accessed values change
+- **Direct Mutations** - Update state directly without reducers or actions
 - **Global Store Reset** - Reset all stores on logout/401 errors
-- **Axios Interceptors** - Automatic token injection and 401 handling
+- **Automatic Token Refresh** - Axios interceptors with token refresh on 401
 
 ## 🎨 UI & Theming
 
@@ -357,7 +365,7 @@ export const useSignInMutationAuthService = () => {
 - [Expo Router Documentation](https://docs.expo.dev/router/introduction/)
 - [React Native Unistyles](https://reactnativeunistyles.vercel.app/)
 - [TanStack Query](https://tanstack.com/query/latest)
-- [Zustand Documentation](https://docs.pmnd.rs/zustand/getting-started/introduction)
+- [Legend State Documentation](https://legendapp.com/open-source/state/)
 
 ## 🤝 Contributing
 

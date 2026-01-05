@@ -75,16 +75,16 @@ const initialState: AuthState = {
   user: { email: "", id: "", firstName: "" }
 };
 
-export const authStore$ = observable(initialState);
+export const authStore = observable(initialState);
 
-syncObservable(authStore$, {
+syncObservable(authStore, {
   persist: { name: "AUTH", plugin: ObservablePersistMMKV }
 });
 
 export const useAuthStore = () => ({
-  setToken: (token: Authentication) => authStore$.authentication.set(token),
-  setUser: (user: User) => authStore$.user.set(user),
-  resetUserStorePersist: () => authStore$.set(initialState)
+  setToken: (token: Authentication) => authStore.authentication.set(token),
+  setUser: (user: User) => authStore.user.set(user),
+  resetUserStorePersist: () => authStore.set(initialState)
 });
 ```
 
@@ -92,8 +92,8 @@ export const useAuthStore = () => ({
 ```typescript
 import { use$ } from "@legendapp/state/react";
 
-export const useSelectToken = () => authStore$.authentication.accessToken.get();
-export const useSelectUser = () => use$(authStore$.user);
+export const useSelectToken = () => authStore.authentication.accessToken.get();
+export const useSelectUser = () => use$(authStore.user);
 ```
 
 ### Model Layer - API
