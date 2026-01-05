@@ -30,7 +30,7 @@ This template implements a **MVVM (Model-View-ViewModel)** architecture pattern 
 
 - **React Native** - Cross-platform mobile framework
 - **Expo** - Development platform and tools
-- **Expo Router** - File-based routing system
+- **Expo Router** - File-based routing system with protected routes
 - **TypeScript** - Type safety and better development experience
 - **React Native Unistyles** - Theming and styling system
 - **TanStack Query** - Server state management and caching
@@ -39,6 +39,7 @@ This template implements a **MVVM (Model-View-ViewModel)** architecture pattern 
 - **React Hook Form** - Form management with Zod validation
 - **i18next** - Internationalization support
 - **React Native Modalfy** - Global modal management
+- **React Native SVG** - SVG icon support with react-native-svg-transformer
 
 ## 📁 Project Structure
 
@@ -313,6 +314,57 @@ export const Fonts = {
 - **Base Components** (`src/shared/ui/`) - Primitive UI components
 - **Widgets** (`src/shared/widgets/`) - Feature-specific composite components
 - **Modals** (`src/shared/widgets/modals/`) - Global modal system
+- **SVG Icons** (`src/shared/ui/icons/`) - SVG icons as React components
+
+### SVG Icons
+
+Icons are stored as SVG files and transformed into React components via `react-native-svg-transformer`:
+
+```typescript
+import { BellIcon, UserIcon } from "ui";
+
+// Direct usage
+<BellIcon width={24} height={24} color="#000" />
+
+// With SvgIcon component (theme-aware)
+import { SvgIcon, BellIcon } from "ui";
+<SvgIcon icon={BellIcon} size={24} color="black_950" />
+```
+
+## 🔐 Protected Routes
+
+The template uses Expo Router's `redirect` prop for authentication-based routing:
+
+```typescript
+// src/app/_layout.tsx
+export default function RootLayout() {
+  const token = useSelectToken();
+  const isLoggedIn = !!token;
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(auth)" redirect={isLoggedIn} />
+      <Stack.Screen name="(tabs)" redirect={!isLoggedIn} />
+    </Stack>
+  );
+}
+```
+
+For three-stack routing (auth + onboarding + tabs):
+
+```typescript
+const isLoggedIn = !!token;
+const showOnboarding = isLoggedIn && !isOnboarded;
+const showTabs = isLoggedIn && isOnboarded;
+
+<Stack screenOptions={{ headerShown: false }}>
+  <Stack.Screen name="(auth)" redirect={isLoggedIn} />
+  <Stack.Screen name="(onboarding)" redirect={!showOnboarding} />
+  <Stack.Screen name="(tabs)" redirect={!showTabs} />
+</Stack>
+```
+
+**Important:** All screens must use `export default` for Expo Router to work correctly.
 
 ## 📱 Customization
 
