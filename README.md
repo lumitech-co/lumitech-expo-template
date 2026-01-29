@@ -13,7 +13,7 @@ This template implements a **MVVM (Model-View-ViewModel)** architecture pattern 
 ### MVVM Components
 
 - **Model** (`src/model/`) - Data layer with business logic, API services, and state management
-- **View** (`src/app/`) - UI layer with screens and components  
+- **View** (`src/app/`) - UI layer with screens and components
 - **ViewModel** (`src/view-model/`) - Business logic layer that connects Views to Models
 - **Services** (`src/services/`) - Shared services and utilities
 - **Widgets** (`src/shared/widgets/`) - Reusable UI components for specific features
@@ -129,7 +129,7 @@ export const useLoginModel = () => {
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
-    defaultValues: { email: '', password: '' },
+    defaultValues: { email: "", password: "" },
   });
 
   const onSubmit = async (data: LoginForm) => {
@@ -157,7 +157,7 @@ import { useLoginModel } from 'view-model/auth';
 
 export default function LoginScreen() {
   const { form, onSubmit, isLoading, error } = useLoginModel();
-  
+
   return (
     <View>
       <Controller
@@ -181,12 +181,12 @@ The template includes comprehensive path aliases for clean imports:
 
 ```typescript
 // Available aliases:
-import { useAuthStore } from 'models/auth';           // src/model/*
-import { useLoginModel } from 'view-model/auth';      // src/view-model/*
-import { LoginModal } from 'widgets/modals';          // src/shared/widgets/*
-import { baseQuery } from 'api';                      // src/shared/api/*
-import { Button } from 'ui';                          // src/shared/ui/*
-import { ToastService } from 'services';              // src/shared/services/*
+import { useAuthStore } from "models/auth"; // src/model/*
+import { useLoginModel } from "view-model/auth"; // src/view-model/*
+import { LoginModal } from "widgets/modals"; // src/shared/widgets/*
+import { baseQuery } from "api"; // src/shared/api/*
+import { Button } from "ui"; // src/shared/ui/*
+import { ToastService } from "services"; // src/shared/services/*
 ```
 
 ## 🚀 Getting Started
@@ -202,12 +202,14 @@ import { ToastService } from 'services';              // src/shared/services/*
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/lumitech-co/lumitech-expo-template.git
    cd lumitech-expo-template
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
@@ -220,11 +222,13 @@ import { ToastService } from 'services';              // src/shared/services/*
 ### Development
 
 1. **Start the development server**
+
    ```bash
    npm start
    ```
 
 2. **Run on iOS**
+
    ```bash
    npm run ios
    ```
@@ -257,8 +261,9 @@ EXPO_PUBLIC_API_URL=https://api.example.com
 ```
 
 Access environment variables anywhere in your app:
+
 ```typescript
-import { Config } from 'lib';
+import { Config } from "lib";
 
 const apiUrl = Config.API_URL;
 ```
@@ -296,15 +301,15 @@ export const useSelectToken = () => authStore.authentication.accessToken.get();
 ```typescript
 // src/shared/themes/Colors.ts
 export const Colors = {
-  primary: '#007AFF',
-  secondary: '#5AC8FA',
+  primary: "#007AFF",
+  secondary: "#5AC8FA",
   // ... your colors
 };
 
 // src/shared/themes/Fonts.ts
 export const Fonts = {
-  regular: 'Inter-Regular',
-  medium: 'Inter-Medium',
+  regular: "Inter-Regular",
+  medium: "Inter-Medium",
   // ... your fonts
 };
 ```
@@ -389,11 +394,11 @@ const showTabs = isLoggedIn && isOnboarded;
 // src/model/auth/api/auth.api.ts
 export const AuthService = {
   login: async (params: LoginRequest) => {
-    const response = await baseQuery.post<LoginResponse>('/auth/login', params);
+    const response = await baseQuery.post<LoginResponse>("/auth/login", params);
     return response?.data;
   },
   register: async (params: RegisterRequest) => {
-    const response = await baseQuery.post<RegisterResponse>('/auth/register', params);
+    const response = await baseQuery.post<RegisterResponse>("/auth/register", params);
     return response?.data;
   },
 };

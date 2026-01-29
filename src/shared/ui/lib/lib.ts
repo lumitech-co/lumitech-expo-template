@@ -1,5 +1,5 @@
-import { BoxProps, TextProps, Theme, TouchableOpacityProps } from './types';
-import { CommonStyleSchema } from './style-schema';
+import { BoxProps, TextProps, Theme, TouchableOpacityProps } from "./types";
+import { CommonStyleSchema } from "./style-schema";
 
 type CommonProps = BoxProps | TouchableOpacityProps | TextProps;
 
@@ -7,15 +7,15 @@ const transformStyle = (styles: CommonProps, theme: Theme) => {
   const finalStyles = new Map<string, string | number>();
 
   Object.entries(styles).forEach(([key, value]) => {
-    if (key in CommonStyleSchema.shape && key !== 'testID') {
-      if ((value && key.endsWith('Color')) || key === 'color') {
-        const color = theme.colors[value as keyof Theme['colors']] ?? 'black';
+    if (key in CommonStyleSchema.shape && key !== "testID") {
+      if ((value && key.endsWith("Color")) || key === "color") {
+        const color = theme.colors[value as keyof Theme["colors"]] ?? "black";
 
-        finalStyles.set(key, color ?? 'transparent');
-      } else if (key === 'fontFamily' && typeof value === 'string') {
-        finalStyles.set(key, theme.fonts[value as keyof Theme['fonts']]);
-      } else if (key === 'fontSize' && typeof value === 'string') {
-        finalStyles.set(key, theme.sizes[value as keyof Theme['sizes']]);
+        finalStyles.set(key, color ?? "transparent");
+      } else if (key === "fontFamily" && typeof value === "string") {
+        finalStyles.set(key, theme.fonts[value as keyof Theme["fonts"]]);
+      } else if (key === "fontSize" && typeof value === "string") {
+        finalStyles.set(key, theme.sizes[value as keyof Theme["sizes"]]);
       } else {
         finalStyles.set(key, value as string);
       }
@@ -42,10 +42,7 @@ export const separateProps = <T extends object, U extends object>(
     if (key in commonSchema) {
       styleProps.set(key, props[key]);
     } else {
-      otherProps.set(
-        key as unknown as keyof U,
-        props[key] as unknown as U[keyof U],
-      );
+      otherProps.set(key as unknown as keyof U, props[key] as unknown as U[keyof U]);
     }
   });
 

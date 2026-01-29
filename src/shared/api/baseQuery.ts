@@ -48,6 +48,7 @@ baseQuery.interceptors.response.use(
 
       if (!refreshToken) {
         resetAllStores();
+
         return Promise.reject(error);
       }
 
@@ -57,6 +58,7 @@ baseQuery.interceptors.response.use(
         })
           .then(token => {
             originalRequest.headers.Authorization = `Bearer ${token}`;
+
             return baseQuery(originalRequest);
           })
           .catch(queueError => Promise.reject(queueError));

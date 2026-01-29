@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
-import { z } from 'zod';
-import { isDev } from './General';
+import { z } from "zod";
+import { isDev } from "./General";
 
 export const envSchema = z.object({
   API_URL: z.string(),
 });
 
 const Config = {
-  API_URL: process.env.EXPO_PUBLIC_API_URL || '',
+  API_URL: process.env.EXPO_PUBLIC_API_URL || "",
 };
 
 export const parseEnv = () => {

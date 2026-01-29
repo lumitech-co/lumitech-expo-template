@@ -33,6 +33,7 @@ const refreshToken = async (params: RefreshTokenRequest) => {
 
 const ping = async () => {
   const response = await baseQuery.get<LoginResponse>("/auth/ping");
+
   return response?.data;
 };
 

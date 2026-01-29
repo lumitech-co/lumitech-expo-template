@@ -1,11 +1,11 @@
 export const Routes = {
   // Auth Routes
-  AUTH: '/(auth)',
+  AUTH: "/(auth)",
 
   // Tab Routes
-  ALERTS: '/(tabs)/alerts',
-  PROFILE: '/(tabs)/profile',
+  ALERTS: "/(tabs)/alerts",
+  PROFILE: "/(tabs)/profile",
 
   // Common Routes
-  NOT_FOUND: '/+not-found',
+  NOT_FOUND: "/+not-found",
 } as const;

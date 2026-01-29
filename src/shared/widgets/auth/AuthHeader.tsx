@@ -6,5 +6,5 @@ export const AuthHeader = () => {
     <Box alignItems="center">
       <Text color="black">Auth header</Text>
     </Box>
-  )
-}
+  );
+};

@@ -2,7 +2,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "api";
 import { Stack } from "expo-router";
 import "lib/i18n";
-import { useSelectToken } from "model";
+import { useAuthToken } from "view-model";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -20,7 +20,7 @@ UnistylesRegistry.addBreakpoints(breakpoints).addThemes({
 });
 
 export default function RootLayout() {
-  const token = useSelectToken();
+  const token = useAuthToken();
   const isLoggedIn = !!token;
 
   return (

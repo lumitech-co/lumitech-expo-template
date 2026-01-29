@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 
 type RefItem<T> =
   | ((element: T | null) => void)
@@ -13,7 +13,7 @@ export const useCombinedRef = <T>(...refs: RefItem<T>[]) => {
         return;
       }
 
-      if (typeof ref === 'function') {
+      if (typeof ref === "function") {
         ref(element);
       } else {
         ref.current = element;

@@ -1,22 +1,16 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import {
-  useSignUpMutation,
-  useAuthStore,
-  RegisterRequest,
-} from "model";
+import { useSignUpMutation, useAuthStore, RegisterRequest } from "model";
 
 const registerSchema = z
   .object({
     name: z.string().min(2, "Name must be at least 2 characters"),
     email: z.string().email("Invalid email address"),
     password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPassword: z
-      .string()
-      .min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string().min(6, "Password must be at least 6 characters"),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine(data => data.password === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"],
   });
@@ -38,21 +32,17 @@ export const useRegisterModel = () => {
   });
 
   const onSubmit = async (data: RegisterForm) => {
-    try {
-      const registerRequest: RegisterRequest = {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      };
+    const registerRequest: RegisterRequest = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
 
-      const response = await registerMutation.mutateAsync(registerRequest);
+    const response = await registerMutation.mutateAsync(registerRequest);
 
-      setToken(response.authentication);
+    setToken(response.authentication);
 
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    return response;
   };
 
   return {
