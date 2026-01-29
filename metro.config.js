@@ -5,9 +5,7 @@ const { getDefaultConfig } = require("expo/metro-config");
 const defaultConfig = getDefaultConfig(__dirname);
 
 // Add SVG to asset extensions and remove from source extensions
-defaultConfig.resolver.assetExts = defaultConfig.resolver.assetExts.filter(
-  ext => ext !== "svg",
-);
+defaultConfig.resolver.assetExts = defaultConfig.resolver.assetExts.filter(ext => ext !== "svg");
 defaultConfig.resolver.sourceExts.push("svg");
 
 /**
