@@ -1,10 +1,10 @@
-import { z } from 'zod';
+import { z } from "zod";
 import {
   flexStyleSchema,
   transformsStyleSchema,
   viewStyleSchema,
   textStyleSchema,
-} from './stylesheet';
+} from "./stylesheet";
 
 export const CommonStyleSchema = z.object({
   ...flexStyleSchema.shape,

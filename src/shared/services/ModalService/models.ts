@@ -1,5 +1,5 @@
 export const MODAL_NAMES = {
-  UPDATE_MODAL: 'UPDATE_MODAL',
+  UPDATE_MODAL: "UPDATE_MODAL",
 };
 
 export type ModalNames = keyof typeof MODAL_NAMES;

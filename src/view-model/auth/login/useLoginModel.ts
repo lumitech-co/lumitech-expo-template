@@ -1,11 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import {
-  LoginRequest,
-  useAuthStore,
-  useSignInMutation,
-} from "model";
+import { LoginRequest, useAuthStore, useSignInMutation } from "model";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -27,20 +23,16 @@ export const useLoginModel = () => {
   });
 
   const onSubmit = async (data: LoginForm) => {
-    try {
-      const loginRequest: LoginRequest = {
-        email: data.email,
-        password: data.password,
-      };
+    const loginRequest: LoginRequest = {
+      email: data.email,
+      password: data.password,
+    };
 
-      const response = await loginMutation.mutateAsync(loginRequest);
+    const response = await loginMutation.mutateAsync(loginRequest);
 
-      setToken(response.authentication);
+    setToken(response.authentication);
 
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    return response;
   };
 
   return {

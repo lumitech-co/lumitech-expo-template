@@ -1,6 +1,6 @@
-import 'react-native-modalfy';
-import { type ModalStackParams } from 'services';
+import "react-native-modalfy";
+import { type ModalStackParams } from "services";
 
-declare module 'react-native-modalfy' {
+declare module "react-native-modalfy" {
   interface ModalfyCustomParams extends ModalStackParams {}
 }

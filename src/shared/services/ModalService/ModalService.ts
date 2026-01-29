@@ -1,5 +1,5 @@
-import { modalfy } from 'react-native-modalfy';
-import { ModalNames, ModalStackParams } from './models';
+import { modalfy } from "react-native-modalfy";
+import { ModalNames, ModalStackParams } from "./models";
 
 const open = <T extends ModalNames>(name: T, params?: ModalStackParams[T]) => {
   modalfy().openModal(name, params);

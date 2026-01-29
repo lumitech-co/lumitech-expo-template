@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
-import { ScrollViewProps } from 'react-native';
-import { KeyboardAwareScrollView as KeyboardAwareScrollViewComponent } from 'react-native-keyboard-controller';
+import React, { FC } from "react";
+import { ScrollViewProps } from "react-native";
+import { KeyboardAwareScrollView as KeyboardAwareScrollViewComponent } from "react-native-keyboard-controller";
 
 interface KeyboardAwareScrollViewProps extends ScrollViewProps {
   bottomOffset?: number;
@@ -13,8 +13,8 @@ export const KeyboardAwareScrollView: FC<KeyboardAwareScrollViewProps> = ({
   children,
   showsVerticalScrollIndicator = false,
   alwaysBounceVertical = false,
-  keyboardDismissMode = 'none',
-  keyboardShouldPersistTaps = 'handled',
+  keyboardDismissMode = "none",
+  keyboardShouldPersistTaps = "handled",
   bottomOffset = BOTTOM_OFFSET,
   ...rest
 }) => {
@@ -25,7 +25,8 @@ export const KeyboardAwareScrollView: FC<KeyboardAwareScrollViewProps> = ({
       keyboardDismissMode={keyboardDismissMode}
       keyboardShouldPersistTaps={keyboardShouldPersistTaps}
       bottomOffset={bottomOffset}
-      {...rest}>
+      {...rest}
+    >
       {children}
     </KeyboardAwareScrollViewComponent>
   );
