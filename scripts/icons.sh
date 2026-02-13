@@ -1,7 +1,9 @@
 #!/bin/bash
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 PATTERN="selection.json"
 DECL_POSTFIX=".d.ts"
-TARGET_DIRECTORY="./assets/resources"
+TARGET_DIRECTORY="$PROJECT_ROOT/src/assets/resources"
 
 echo "Current Directory: $(pwd)"
 echo "Checking for files in: $TARGET_DIRECTORY"
