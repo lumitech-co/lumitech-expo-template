@@ -32,9 +32,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarItemStyle: styles.tabBarItemStyle,
         lazy: true,
-        tabBarLabel: () => (
-          <Text style={styles.text}>{titles[route.name]}</Text>
-        ),
+        tabBarLabel: () => <Text style={styles.text}>{titles[route.name]}</Text>,
         tabBarIcon: ({ focused }) => {
           const IconComponent = tabIcons[route.name];
           const iconColor = focused ? theme.colors.black : theme.colors.gray_400;
@@ -42,7 +40,8 @@ export default function TabLayout() {
           return <IconComponent width={22} height={22} color={iconColor} />;
         },
       })}
-      backBehavior="history">
+      backBehavior="history"
+    >
       <Tabs.Screen name="alerts" options={{ headerShown: false }} />
       <Tabs.Screen name="profile" options={{ headerShown: false }} />
     </Tabs>
@@ -53,15 +52,15 @@ const stylesheet = createStyleSheet(theme => ({
   tabBarItemStyle: {
     height: 42,
     marginTop: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
   },
   tabBarBadgeStyle: {
     top: -8,
     fontSize: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     lineHeight: 14,
     width: 16,
     height: 16,
@@ -71,7 +70,7 @@ const stylesheet = createStyleSheet(theme => ({
   text: {
     fontSize: 10,
     lineHeight: 12,
-    fontWeight: '500',
+    fontWeight: "500",
     fontFamily: theme.fonts.Medium,
     color: theme.colors.black,
   },

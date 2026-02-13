@@ -19,12 +19,5 @@ export const SvgIcon: React.FC<SvgIconProps> = ({
 }) => {
   const { theme } = useStyles();
 
-  return (
-    <IconComponent
-      width={size}
-      height={size}
-      color={theme.colors[color]}
-      {...rest}
-    />
-  );
+  return <IconComponent width={size} height={size} color={theme.colors[color]} {...rest} />;
 };

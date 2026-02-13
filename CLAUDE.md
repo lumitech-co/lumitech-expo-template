@@ -3,12 +3,14 @@
 ## Architecture: MVVM with Clean Architecture
 
 ### Layer Structure
+
 - **Model** (`src/model/`) - Domain logic, API, state
 - **ViewModel** (`src/view-model/`) - Presentation logic hooks
 - **View** (`src/app/`) - UI screens (Expo Router)
 - **Shared** (`src/shared/`) - Cross-cutting concerns
 
 ### Import Rules (STRICTLY ENFORCED)
+
 - Views → view-model, widgets, ui, shared
 - ViewModels → models, shared (NOT other view-models)
 - Models → shared, api (NOT presentation layers)
@@ -16,8 +18,9 @@
 - UI → shared only
 
 ### Path Aliases (REQUIRED - no relative imports)
-- `model/*` for src/model/*
-- `view-model/*` for src/view-model/*
+
+- `model/*` for src/model/\*
+- `view-model/*` for src/view-model/\*
 - `api` for src/shared/api
 - `ui` for src/shared/ui
 - `widgets` for src/shared/widgets
@@ -29,6 +32,7 @@
 ## File Structure Patterns
 
 ### New Feature Structure
+
 ```
 src/model/[domain]/
 ├── api/
@@ -52,6 +56,7 @@ src/view-model/[domain]/
 ```
 
 ### Component Structure
+
 ```
 src/shared/ui/[Component]/
 ├── [Component].tsx
@@ -65,6 +70,7 @@ src/shared/widgets/[feature]/
 ## Code Patterns
 
 ### Model Layer - Store (Legend State)
+
 ```typescript
 import { observable } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
@@ -72,23 +78,24 @@ import { ObservablePersistMMKV } from "@legendapp/state/persist-plugins/mmkv";
 
 const initialState: AuthState = {
   authentication: { accessToken: "", refreshToken: "" },
-  user: { email: "", id: "", firstName: "" }
+  user: { email: "", id: "", firstName: "" },
 };
 
 export const authStore = observable(initialState);
 
 syncObservable(authStore, {
-  persist: { name: "AUTH", plugin: ObservablePersistMMKV }
+  persist: { name: "AUTH", plugin: ObservablePersistMMKV },
 });
 
 export const useAuthStore = () => ({
   setToken: (token: Authentication) => authStore.authentication.set(token),
   setUser: (user: User) => authStore.user.set(user),
-  resetUserStorePersist: () => authStore.set(initialState)
+  resetUserStorePersist: () => authStore.set(initialState),
 });
 ```
 
 ### Model Layer - Selectors
+
 ```typescript
 import { use$ } from "@legendapp/state/react";
 
@@ -97,6 +104,7 @@ export const useSelectUser = () => use$(authStore.user);
 ```
 
 ### Model Layer - API
+
 ```typescript
 import { baseQuery } from "api";
 
@@ -104,27 +112,29 @@ export const AuthApi = {
   login: async (params: LoginRequest) => {
     const response = await baseQuery.post<LoginResponse>("/auth/login", params);
     return response?.data;
-  }
+  },
 };
 ```
 
 ### Model Layer - Mutations/Queries
+
 ```typescript
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useSignInMutation = () =>
   useMutation<LoginResponse, AxiosError, LoginRequest>({
-    mutationFn: AuthApi.login
+    mutationFn: AuthApi.login,
   });
 
 export const useHealthCheck = () =>
   useQuery<LoginResponse, AxiosError>({
     queryFn: AuthApi.ping,
-    queryKey: QUERY_KEYS.HEALTHCHECK
+    queryKey: QUERY_KEYS.HEALTHCHECK,
   });
 ```
 
 ### ViewModel Layer
+
 ```typescript
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -132,7 +142,7 @@ import { z } from "zod";
 
 const loginSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(6)
+  password: z.string().min(6),
 });
 
 type LoginForm = z.infer<typeof loginSchema>;
@@ -143,7 +153,7 @@ export const useLoginModel = () => {
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
-    defaultValues: { email: "", password: "" }
+    defaultValues: { email: "", password: "" },
   });
 
   const onSubmit = async (data: LoginForm) => {
@@ -157,12 +167,13 @@ export const useLoginModel = () => {
     onSubmit: form.handleSubmit(onSubmit),
     isLoading: loginMutation.isPending,
     error: loginMutation.error,
-    isSuccess: loginMutation.isSuccess
+    isSuccess: loginMutation.isSuccess,
   };
 };
 ```
 
 ### View Layer
+
 ```typescript
 import { useLoginModel } from "view-model/auth";
 import { Box, Text } from "ui";
@@ -181,6 +192,7 @@ export default function LoginScreen() {
 ## UI Components
 
 ### Box Component (Layout)
+
 ```typescript
 <Box
   flex={1}
@@ -193,6 +205,7 @@ export default function LoginScreen() {
 ```
 
 ### Text Component (Typography)
+
 ```typescript
 <Text
   fontSize="xl"
@@ -204,11 +217,13 @@ export default function LoginScreen() {
 ```
 
 ### Theme Values
+
 Check `src/shared/themes/` for available colors, font sizes, and fonts.
 
 ## Services
 
 ### ToastService
+
 ```typescript
 import { ToastService } from "services";
 
@@ -219,6 +234,7 @@ ToastService.onHide();
 ```
 
 ### ModalService
+
 ```typescript
 import { ModalService } from "services";
 
@@ -228,6 +244,7 @@ ModalService.closeAllModals();
 ```
 
 ### RouteService (Navigation)
+
 ```typescript
 import { RouteService } from "services";
 
@@ -240,6 +257,7 @@ RouteService.reset("ROUTE_NAME");
 Check `src/shared/services/RouteService/models/Routes.ts` for available routes.
 
 ### Usage in Components
+
 ```typescript
 import { useTranslation } from "react-i18next";
 
@@ -248,14 +266,17 @@ const { t } = useTranslation();
 ```
 
 ### Translation File Location
+
 `src/shared/translations/en.json`
 
 ## SVG Icons
 
 ### Icon Location
+
 SVG icons are stored in `src/shared/ui/icons/` and exported from `ui`.
 
 ### Using Icons Directly
+
 ```typescript
 import { BellIcon, UserIcon } from "ui";
 
@@ -263,6 +284,7 @@ import { BellIcon, UserIcon } from "ui";
 ```
 
 ### Using SvgIcon Component (with theme colors)
+
 ```typescript
 import { SvgIcon, BellIcon } from "ui";
 
@@ -270,12 +292,14 @@ import { SvgIcon, BellIcon } from "ui";
 ```
 
 ### Adding New Icons
+
 1. Add SVG file to `src/shared/ui/icons/`
 2. Export from `src/shared/ui/icons/index.ts`
 
 ## Routing & Authentication
 
 ### Protected Routes with Redirect
+
 Use the `redirect` prop on `Stack.Screen` to handle auth-based routing:
 
 ```typescript
@@ -294,6 +318,7 @@ export default function RootLayout() {
 ```
 
 ### Three-Stack Example (auth + onboarding + tabs)
+
 ```typescript
 const isLoggedIn = !!token;
 const showOnboarding = isLoggedIn && !isOnboarded;
@@ -307,6 +332,7 @@ const showTabs = isLoggedIn && isOnboarded;
 ```
 
 ### Screen Export Rule
+
 All screens in `src/app/` MUST use `export default`. Named exports will not work with Expo Router.
 
 ## Naming Conventions
@@ -331,6 +357,7 @@ All screens in `src/app/` MUST use `export default`. Named exports will not work
 ## Git Commits
 
 Use Conventional Commits format:
+
 - feat: new feature
 - fix: bug fix
 - chore: maintenance
@@ -340,10 +367,12 @@ Use Conventional Commits format:
 - test: adding tests
 
 ## Pre-commit Checks
+
 - ESLint (`npm run lint`)
 - TypeScript (`npm run typescript`)
 
 ## Commands
+
 - `npm start` - Start Expo dev server
 - `npm run ios` - Run on iOS
 - `npm run android` - Run on Android

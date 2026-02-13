@@ -1,9 +1,9 @@
-import { toast } from 'sonner-native';
-import { ViewStyle } from 'react-native';
-import { Colors } from 'themes';
+import { toast } from "sonner-native";
+import { ViewStyle } from "react-native";
+import { Colors } from "themes";
 
 interface ToastParams {
-  position?: 'top-center' | 'bottom-center';
+  position?: "top-center" | "bottom-center";
   title: string;
   description?: string;
 }

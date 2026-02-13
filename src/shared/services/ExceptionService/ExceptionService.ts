@@ -1,5 +1,5 @@
-import i18n from 'i18next';
-import { z } from 'zod';
+import i18n from "i18next";
+import { z } from "zod";
 
 export const ErrorSchema = z.object({
   message: z.string(),
@@ -15,7 +15,7 @@ const errorResolver = (error: unknown) => {
     return parsedError.data.message;
   }
 
-  return i18n.t('errors.server-unable');
+  return i18n.t("errors.server-unable");
 };
 
 export const ExceptionService = {

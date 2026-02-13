@@ -1,10 +1,10 @@
-import { router } from 'expo-router';
-import { Routes } from './models/Routes';
-import { RouteType } from './models/RootStackParamList';
+import { router } from "expo-router";
+import { Routes } from "./models/Routes";
+import { RouteType } from "./models/RootStackParamList";
 
 const navigate = (name: RouteType, params?: any) => {
   const path = Routes[name];
-  
+
   if (params) {
     router.push({ pathname: path, params });
   } else {
@@ -26,7 +26,7 @@ const goBack = () => {
   }
 };
 
-const pop = (screenCount?: number) => {
+const pop = (_screenCount?: number) => {
   // Multiple pops not directly supported, use goBack
   if (router.canGoBack()) {
     router.back();
@@ -48,7 +48,7 @@ const setParams = (params: object) => {
 
 const replace = (name: RouteType, params?: any) => {
   const path = Routes[name];
-  
+
   if (params) {
     router.replace({ pathname: path, params });
   } else {
@@ -61,10 +61,7 @@ const reset = (name: RouteType, params?: any) => {
   replace(name, params);
 };
 
-const navigateToNestedNavigatorScreen = (
-  screen: RouteType,
-  params?: any
-) => {
+const navigateToNestedNavigatorScreen = (screen: RouteType, params?: any) => {
   // For nested navigation, navigate directly to the screen
   navigate(screen, params);
 };

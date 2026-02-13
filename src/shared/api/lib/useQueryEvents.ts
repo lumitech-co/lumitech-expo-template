@@ -1,6 +1,6 @@
-import type { UseQueryResult } from '@tanstack/react-query';
-import { useLatest } from 'hooks';
-import { useEffect } from 'react';
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useLatest } from "hooks";
+import { useEffect } from "react";
 
 type QueryEvents<TData = unknown, TError = unknown> = {
   onSuccess?: (data: TData) => unknown;
