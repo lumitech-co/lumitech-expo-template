@@ -16,6 +16,7 @@
 - Models → shared, api (NOT presentation layers)
 - Widgets → ui, shared (NOT business logic)
 - UI → shared only
+- Stores → shared only (stores live under `src/shared/stores` and may be read by any layer, including `api`, since global state is a shared cross-cutting concern)
 
 ### Path Aliases (REQUIRED - no relative imports)
 
@@ -27,6 +28,7 @@
 - `services` for src/shared/services
 - `hooks` for src/shared/hooks
 - `lib` for src/shared/lib
+- `stores` for src/shared/stores
 - `themes` for src/shared/themes
 
 ## File Structure Patterns
@@ -42,15 +44,30 @@ src/model/[domain]/
 │   ├── queryKeys.ts         # Query key constants
 │   └── index.ts
 ├── store/
-│   ├── [domain].store.ts    # Legend State observable
-│   ├── [domain].selectors.ts # Selector hooks
-│   └── index.ts
+│   └── index.ts             # Re-exports the global store + selectors from `stores/[domain]`
 ├── [domain].types.ts        # Domain interfaces
 └── index.ts
 
 src/view-model/[domain]/
 ├── [feature]/
 │   ├── use[Feature]Model.ts # ViewModel hook
+│   └── index.ts
+└── index.ts
+```
+
+### Global State Structure (Zustand)
+
+Global/persisted state lives under `src/shared/stores` so it can be read by any
+layer (including `api`), not just the model layer.
+
+```
+src/shared/stores/
+├── lib.ts                   # createStore, createSelectors, resetAllStores, MMKV storage helpers
+├── models.ts                # PersistStorageKeys constants
+├── [domain]/
+│   ├── store.ts             # Zustand store (createStore + immer + MMKV persist)
+│   ├── selectors.ts         # createSelectors + useSelect[X] hooks
+│   ├── types.ts             # State + Store interfaces
 │   └── index.ts
 └── index.ts
 ```
@@ -69,38 +86,82 @@ src/shared/widgets/[feature]/
 
 ## Code Patterns
 
-### Model Layer - Store (Legend State)
+### Store Layer - Zustand Store
+
+State and actions live together on the store. Use `createStore` (persists to MMKV +
+registers the store for `resetAllStores`) and the `immer` middleware for ergonomic updates.
 
 ```typescript
-import { observable } from "@legendapp/state";
-import { syncObservable } from "@legendapp/state/sync";
-import { ObservablePersistMMKV } from "@legendapp/state/persist-plugins/mmkv";
+// src/shared/stores/auth/types.ts
+export interface AuthState {
+  user: User;
+  authentication: Authentication;
+}
+
+export interface AuthStore extends AuthState {
+  setToken: (token: Authentication) => void;
+  setUser: (user: User) => void;
+  resetUserStorePersist: () => void;
+}
+
+// src/shared/stores/auth/store.ts
+import { createMMKV } from "react-native-mmkv";
+import { immer } from "zustand/middleware/immer";
+
+import { createStore } from "../lib";
+import { PersistStorageKeys } from "../models";
+import { AuthState, AuthStore } from "./types";
+
+const persistStorage = createMMKV({ id: PersistStorageKeys.AUTH });
 
 const initialState: AuthState = {
   authentication: { accessToken: "", refreshToken: "" },
   user: { email: "", id: "", firstName: "" },
 };
 
-export const authStore = observable(initialState);
-
-syncObservable(authStore, {
-  persist: { name: "AUTH", plugin: ObservablePersistMMKV },
-});
-
-export const useAuthStore = () => ({
-  setToken: (token: Authentication) => authStore.authentication.set(token),
-  setUser: (user: User) => authStore.user.set(user),
-  resetUserStorePersist: () => authStore.set(initialState),
-});
+export const useAuthStore = createStore<AuthStore>(
+  immer(set => ({
+    ...initialState,
+    setToken: token => {
+      set(state => {
+        state.authentication = token;
+      });
+    },
+    setUser: user => {
+      set(state => {
+        state.user = user;
+      });
+    },
+    resetUserStorePersist: () => {
+      set(state => {
+        state.user = initialState.user;
+        state.authentication = initialState.authentication;
+      });
+    },
+  })),
+  PersistStorageKeys.AUTH,
+  persistStorage,
+);
 ```
 
-### Model Layer - Selectors
+### Store Layer - Selectors
+
+`createSelectors` attaches a `.use` accessor; expose narrow `useSelect[X]` hooks so
+components only re-render on the slice they read. For imperative access outside React
+(e.g. an Axios interceptor), use `useAuthStore.getState()`.
 
 ```typescript
-import { use$ } from "@legendapp/state/react";
+// src/shared/stores/auth/selectors.ts
+import { createSelectors } from "../lib";
+import { useAuthStore } from "./store";
 
-export const useSelectToken = () => authStore.authentication.accessToken.get();
-export const useSelectUser = () => use$(authStore.user);
+export const useAuthStoreSelectors = createSelectors(useAuthStore);
+
+export const useSelectToken = () =>
+  useAuthStoreSelectors(state => state.authentication.accessToken);
+export const useSelectUser = () => useAuthStoreSelectors(state => state.user);
+
+// Imperative (non-React) read: useAuthStore.getState().authentication.accessToken
 ```
 
 ### Model Layer - API

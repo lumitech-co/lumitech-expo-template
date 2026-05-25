@@ -25,6 +25,9 @@
       "services": ["src/shared/services/index"],
       "services/*": ["src/shared/services/*"],
 
+      "stores": ["src/shared/stores/index"],
+      "stores/*": ["src/shared/stores/*"],
+
       "themes": ["src/shared/themes/index"],
       "themes/*": ["src/shared/themes/*"],
 

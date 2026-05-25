@@ -1,4 +1,4 @@
-import type { Authentication, User, AuthState } from "lib";
+import type { Authentication, User, AuthState } from "stores";
 
 export type { Authentication, User, AuthState };
 
