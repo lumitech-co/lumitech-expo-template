@@ -12,7 +12,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     icon: "./src/assets/images/logo.png",
     scheme: "lumitechexpotemplate",
     userInterfaceStyle: "automatic",
-    newArchEnabled: true,
     ios: {
       supportsTablet: false,
       bundleIdentifier: "com.app.lumitechexpotemplate",
@@ -22,7 +21,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         foregroundImage: "./src/assets/images/logo.png",
         backgroundColor: "#ffffff",
       },
-      edgeToEdgeEnabled: true,
       package: "com.app.lumitechexpotemplate",
     },
     plugins: [
