@@ -1,5 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
-import { authStore, resetAllStores } from "lib";
+import { resetAllStores, useAuthStore } from "stores";
 import { ExceptionService } from "services";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -27,7 +27,7 @@ const baseQuery = axios.create({
 });
 
 baseQuery.interceptors.request.use(config => {
-  const token = authStore.authentication.accessToken.get();
+  const token = useAuthStore.getState().authentication.accessToken;
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -44,7 +44,7 @@ baseQuery.interceptors.response.use(
     };
 
     if (error?.response?.status === 401 && !originalRequest._retry) {
-      const refreshToken = authStore.authentication.refreshToken.get();
+      const { refreshToken } = useAuthStore.getState().authentication;
 
       if (!refreshToken) {
         resetAllStores();
@@ -75,7 +75,7 @@ baseQuery.interceptors.response.use(
         const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
           response.data.authentication;
 
-        authStore.authentication.set({
+        useAuthStore.getState().setToken({
           accessToken: newAccessToken,
           refreshToken: newRefreshToken,
         });
